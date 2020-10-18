@@ -1,8 +1,8 @@
 import React from "react";
-import VolumeAdjustment from "../../components/number/volume-adjust/main";
-import SpeechInNoise from "../../components/number/speech-in-noise/main";
-import Environment from "../../components/number/helpers/environment";
-import Submit from "../../components/number/helpers/submit";
+import VolumeAdjustment from "../components/volume-adjust/main";
+import SpeechInNoise from "../components/speech-in-noise/main";
+import Environment from "../components/helpers/environment";
+import Submit from "../components/helpers/submit";
 import { Container } from "@material-ui/core";
 import axios from "axios";
 
@@ -79,8 +79,9 @@ class Version1 extends React.Component {
         return (
           <SpeechInNoise
             volume={this.state.volume}
-            handleFinish={(SNR, timer) =>
+            handleFinish={(SNR, timer) => {
               this.setState({ process: "submit", SNR, timer })
+            }
             }
           />
         );

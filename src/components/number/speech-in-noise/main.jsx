@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Container, CircularProgress } from "@material-ui/core";
 
-class Survey extends React.Component {
+class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +14,7 @@ class Survey extends React.Component {
       input2: "",
       input3: "",
       step: 1,
+      steps: 20,
       disabled: true,
       loading: true,
       time: 0,
@@ -86,7 +87,7 @@ class Survey extends React.Component {
     await this.setState({ disabled: true });
     if (this.state.time !== 0) {
       this.stopTimer();
-      timer.push(Number(this.state.time).toFixed(2));
+      timer.push(Number(this.state.time).toFixed(3));
       this.resetTimer();
       this.setState({ timer });
     }
@@ -146,7 +147,7 @@ class Survey extends React.Component {
         "RIGHT, decreasing audio volume to " + this.state.audioVolume
       );
     }
-    if (step !== 20) {
+    if (step !== this.state.steps) {
       this.setState({
         realAnswer: "",
         input1: "",
@@ -159,10 +160,10 @@ class Survey extends React.Component {
       // Timer
       this.stopTimer();
       const timer = this.state.timer;
-      timer.push(Number(this.state.time).toFixed(2));
+      timer.push(Number(this.state.time).toFixed(3));
       // SNR
       let sum = 0;
-      for (let i = 15; i < 20; i++) {
+      for (let i = 15; i < this.state.steps; i++) {
         sum += this.state.dbs[i];
       }
       const SNR = Number(sum / 5).toFixed(2);
@@ -287,7 +288,7 @@ class Survey extends React.Component {
           </div>
           {this.renderInputs()}
           <h6 className="font-weight-lighter" style={{ marginTop: 10 }}>
-            Step {step} of 20
+            Step {step} of {this.state.steps}
           </h6>
         </div>
       </Container>
@@ -295,4 +296,4 @@ class Survey extends React.Component {
   }
 }
 
-export default Survey;
+export default Main;
