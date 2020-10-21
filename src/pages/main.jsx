@@ -17,7 +17,7 @@ const Main = (props) => {
             <Button size="small" onClick={() => props.history.push("/signalloss")}>Start</Button>
           </CardActions>
         </Card>
-        <Card >
+        <Card style={{ margin: 20 }}>
           <CardContent>
             <Typography variant="h5" component="h2">
               Digits in Noise
