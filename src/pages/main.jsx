@@ -10,10 +10,7 @@ const Main = (props) => {
         <Card style={{ margin: 20 }}>
           <CardContent>
             <Typography variant="h5" component="h2">
-              Signal Loss Test
-            </Typography>
-            <Typography color="textSecondary" gutterBottom>
-              Signal Loss Test
+              Sentences in Noise
             </Typography>
           </CardContent>
           <CardActions>
@@ -23,10 +20,7 @@ const Main = (props) => {
         <Card >
           <CardContent>
             <Typography variant="h5" component="h2">
-              Number test
-            </Typography>
-            <Typography color="textSecondary" gutterBottom>
-              Number test
+              Digits in Noise
             </Typography>
           </CardContent>
           <CardActions>

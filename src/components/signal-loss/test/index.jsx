@@ -224,7 +224,7 @@ class TestMain extends React.Component {
                     onClose={this.handleCloseAlert}
                 >
                     <Alert onClose={this.handleClose} severity="info">
-                        You can guess one!
+                        It's Okay to Guess
                     </Alert>
                 </Snackbar>
             </div>
