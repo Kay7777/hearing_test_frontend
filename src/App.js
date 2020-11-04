@@ -1,17 +1,18 @@
 import React from 'react';
 import { Route, BrowserRouter } from "react-router-dom";
 import Main from "./pages/main";
+import DigitsMain from "./pages/digits/main";
 import SignalLossMain from "./pages/signal-loss/main";
 import SignalLossTest from "./pages/signal-loss/test";
-import NumberMain from "./pages/number/start";
-import NumberData from "./pages/number/data";
-import NumberId from "./pages/number/id";
-import NumberTest from "./pages/number/test";
-import NumberResult from "./pages/number/result";
-import NumberFinal from "./pages/number/final";
-import NumberV1 from "./pages/number/v1";
-import NumberV2 from "./pages/number/v2";
-import NumberV3 from "./pages/number/v3";
+import SignalLossData from "./pages/signal-loss/data";
+import SignalLossDetailedData from "./pages/signal-loss/detailed-data";
+import Consents from "./components/digits/database/consents";
+import PreTest from "./components/digits/database/pre-test";
+import PostTest1 from "./components/digits/database/post-test-1";
+import PostTest2 from "./components/digits/database/post-test-2";
+import PostTest3 from "./components/digits/database/post-test-3";
+import UserData from "./components/digits/database/user-data";
+import Database from "./pages/digits/database";
 
 class App extends React.Component {
   constructor(props) {
@@ -24,16 +25,17 @@ class App extends React.Component {
       <BrowserRouter>
         <Route exact path="/" component={Main} />
         <Route exact path="/signalloss" component={SignalLossMain} />
+        <Route exact path="/signalloss/database" component={SignalLossData} />
+        <Route exact path="/signalloss/database/:id" component={SignalLossDetailedData} />
         <Route exact path="/signalloss/test" component={SignalLossTest} />
-        <Route exact path="/number" component={NumberMain} />
-        <Route exact path="/id" component={NumberId} />
-        <Route exact path="/version1/:id" component={NumberV1} />
-        <Route exact path="/version2/:id" component={NumberV2} />
-        <Route exact path="/version3/:id" component={NumberV3} />
-        <Route exact path="/test" component={NumberTest} />
-        <Route exact path="/final" component={NumberFinal} />
-        <Route exact path="/result/:res" component={NumberResult} />
-        <Route exact path="/database" component={NumberData} />
+        <Route exact path="/digits" component={DigitsMain} />
+        <Route exact path="/database" component={Database} />
+        <Route exact path="/database/consents" component={Consents} />
+        <Route exact path="/database/pretest" component={PreTest} />
+        <Route exact path="/database/posttest1" component={PostTest1} />
+        <Route exact path="/database/posttest2" component={PostTest2} />
+        <Route exact path="/database/posttest3" component={PostTest3} />
+        <Route exact path="/database/userdata" component={UserData} />
       </BrowserRouter>
     );
   }

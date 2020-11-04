@@ -15,35 +15,27 @@ class TestMain extends React.Component {
             maskVolume: this.props.volume,
             sourceVolume: this.props.volume,
             questions: [],
-            lossOrSource: [],
             index: 0,
             dbs: [0],
-            amount: 5,
             time: 0,
             timer: [],
             userStart: false,
             alert: false,
-            once: false
+            once: false,
+            traversals: 0,
+            lastCorrectness: null
         }
     }
 
     componentDidMount = async () => {
+        console.log("Cycle: ", this.props.cycle);
         for (var i = 0; i < 4; i++) {
             for (var j = 1; j < 9; j++) {
-                console.log(process.env.PUBLIC_URL + "/loss-audios/0" + i.toString() + j.toString() + ".wav");
                 const audio1 = new Audio(process.env.PUBLIC_URL + "/loss-audios/0" + i.toString() + j.toString() + ".wav");
-                // const audio2 = new Audio(process.env.PUBLIC_URL + "/mask-audios/0" + i.toString() + j.toString() + ".wav");
-                const audio3 = new Audio(process.env.PUBLIC_URL + "/source-audios/0" + i.toString() + j.toString() + ".wav");
                 audio1.volume = 0;
-                // audio2.volume = 0;
-                audio3.volume = 0;
                 try {
                     await audio1.play();
-                    // await audio2.play();
-                    await audio3.play();
                     audio1.pause();
-                    // audio2.pause();
-                    audio3.pause();
                 } catch (e) { console.log(e, "for", i, j) }
             }
         }
@@ -51,20 +43,11 @@ class TestMain extends React.Component {
         audio.volume = 0;
         await audio.play();
         audio.pause();
-        const questions = [];
-        const lossOrSource = [];
-        for (let i = 0; i < this.state.amount; i++) {
-            const color = Math.floor(Math.random() * 4).toString();
-            const number = Math.ceil(Math.random() * 8).toString();
-            lossOrSource.push(Math.floor(Math.random() * 2).toString());
-            questions.push("0" + color + number);
-        }
-        this.setState({ lossOrSource, loading: false, questions }, () => console.log(this.state));
+        this.setState({ loading: false }, () => console.log(this.state));
         this.playAudio();
     }
 
     componentDidUpdate = () => {
-        // console.log(this.state)
         if (this.state.time >= 5 && this.state.alert === false && this.state.once === false) {
             this.setState({ alert: true, once: true });
         }
@@ -79,31 +62,27 @@ class TestMain extends React.Component {
             },
             10
         );
-        console.log("start");
     };
     stopTimer = () => {
         clearInterval(this.timer);
-        console.log("stop");
     };
     resetTimer = () => {
         this.setState({ time: 0, alert: false, once: false });
-        console.log("reset");
     };
 
     playAudio = async () => {
-        const { questions, index, maskVolume, sourceVolume, lossOrSource } = this.state;
-        let sourceAudio;
-        if (lossOrSource[index] === "0") {
-            sourceAudio = new Audio(process.env.PUBLIC_URL + "/loss-audios/" + questions[index] + ".wav");
-        } else {
-            sourceAudio = new Audio(process.env.PUBLIC_URL + "/source-audios/" + questions[index] + ".wav");
-        }
+        const { questions, maskVolume, sourceVolume } = this.state;
+        const color = Math.floor(Math.random() * 4).toString();
+        const number = Math.ceil(Math.random() * 8).toString();
+        const question = "0" + color + number
+        questions.push(question);
+        this.setState({ questions });
+        let sourceAudio = new Audio(process.env.PUBLIC_URL + "/loss-audios/" + question + ".wav");
         const maskAudio = this.state.noise;
         sourceAudio.volume = sourceVolume;
         maskAudio.volume = maskVolume;
         await sourceAudio.play();
         await maskAudio.play();
-        console.log("this audio is", sourceAudio.duration, "s long.");
         setTimeout(() => {
             maskAudio.pause();
             this.setState({ userStart: true });
@@ -112,27 +91,47 @@ class TestMain extends React.Component {
     }
 
     handleClick = async (num) => {
-        const { questions, index, timer } = this.state;
+        const { questions, index, timer, lastCorrectness, traversals } = this.state;
         this.setState({ userStart: false });
         this.stopTimer();
         timer.push(Number(this.state.time).toFixed(3));
         this.resetTimer();
         this.setState({ timer });
         const correct = questions[index] === num;
+        let sourceVolume;
         if (correct) {
-            var sourceVolume = this.goHarder();
+            if (lastCorrectness === null) {
+                this.setState({ lastCorrectness: true })
+            } else if (lastCorrectness === false) {
+                console.log("RIGHT, Traversal", traversals + 1, "times!")
+                this.setState({ lastCorrectness: true, traversals: traversals + 1 })
+            }
+            sourceVolume = this.goHarder();
         } else {
-            var sourceVolume = this.goEasier();
+            if (lastCorrectness === null) {
+                this.setState({ lastCorrectness: false })
+            } else if (lastCorrectness === true) {
+                console.log("WRONG, Traversal", traversals + 1, "times!")
+                this.setState({ lastCorrectness: false, traversals: traversals + 1 })
+            }
+            sourceVolume = this.goEasier();
         }
-        console.log(this.state);
         await this.setState({ index: index + 1, sourceVolume });
-        if (this.state.index >= this.state.amount) {
-            console.log("it goes finish")
-            const { dbs, lossOrSource } = this.state;
-            const sum = dbs.reduce((pre, num) => pre + num, 0);
-            const SNR = Number(sum / 5).toFixed(2);
+        if (this.state.traversals >= 3) {
+            const { dbs } = this.state;
+            let sum = 0;
+            if (dbs.length >= 10) {
+                for (let i = dbs.length - 10; i < dbs.length; i++) {
+                    sum += dbs[i];
+                }
+            } else {
+                for (let i = 0; i < dbs.length; i++) {
+                    sum += dbs[i];
+                }
+            }
+            const SNR = Number(sum / 10).toFixed(2);
             console.log("SNR is " + SNR);
-            this.props.handleClick(SNR, timer, lossOrSource, dbs);
+            this.props.handleClick(SNR, timer, dbs);
         } else {
             setTimeout(() => {
                 this.playAudio();
@@ -164,7 +163,7 @@ class TestMain extends React.Component {
     };
 
     render() {
-        const { loading, index, amount, userStart, time } = this.state;
+        const { loading, userStart } = this.state;
         return (
             <div>
                 {

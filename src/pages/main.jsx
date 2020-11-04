@@ -24,7 +24,7 @@ const Main = (props) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={() => props.history.push("/number")}>Start</Button>
+            <Button size="small" onClick={() => props.history.push("/digits")}>Start</Button>
           </CardActions>
         </Card>
       </div>

@@ -4,27 +4,28 @@ import { Container, Button } from "@material-ui/core";
 export default (props) => {
   return (
     <Container>
+      <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+        4
+      </h2>
       <div
         style={{
           textAlign: "center",
           position: "relative",
-          marginTop: "20%",
+          marginTop: "15%",
         }}
       >
-        <h5>Click the ‘START’ button to begin the hearing activity</h5>
+        <h2>
+          Make sure you're in a quiet place where you can complete the test
+          without distraction!
+        </h2>
         <Button
           color="primary"
           variant="contained"
           size="large"
-          onClick={() => props.history.push("/id")}
-          style={{
-            backgroundColor: "black",
-            borderRadius: "100%",
-            height: 80,
-            width: 80,
-          }}
+          style={{ margin: 20, width: 200, backgroundColor: "black" }}
+          onClick={props.handleClick}
         >
-          Start
+          OK
         </Button>
       </div>
     </Container>

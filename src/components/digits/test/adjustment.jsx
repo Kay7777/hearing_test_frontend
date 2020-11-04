@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container } from "@material-ui/core";
-import VolumeSlider from "../../../assets/number/volume-slider";
+import VolumeSlider from "../../../assets/digits/volume-slider";
 
 class VolumeAdjustment extends React.Component {
   constructor(props) {
@@ -10,7 +10,6 @@ class VolumeAdjustment extends React.Component {
       audio: new Audio(process.env.PUBLIC_URL + "/audios/adjust.wav"),
       audioPlay: false,
       audioVolume: 0.1,
-      done: false,
     };
   }
   componentDidMount = () => {
@@ -65,33 +64,44 @@ class VolumeAdjustment extends React.Component {
     this.setState({ audioPlay: false });
   };
 
-  handleNext = async () => {
-    await this.handleStop();
-    this.setState({ done: true });
-  };
-
   handleVolume = (volume) => {
     this.setState({ audioVolume: volume / 100 });
     this.props.handleVolume(volume);
   };
 
-  askAudioOutput = () => {
+  handleNext = () => {
+    this.state.audio.pause();
+    this.props.handleClick();
+  };
+
+  render() {
     const { audioPlay } = this.state;
     return (
-      <div>
-        <Container>
-          <h6 className="font-weight-light">
-            Set your device's volume to the 50%. Click PLAY to listen to an
-            audio sample.
-          </h6>
-          <h6 className="font-weight-light">
-            Then, move the slider below to a comfortable listening level. After
-            that, click NEXT to begin the activity.
-          </h6>
-        </Container>
-
-        <div className="row">
-          <VolumeSlider handleVolume={this.handleVolume} />
+      <Container>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          5
+        </h2>
+        <div
+          style={{
+            textAlign: "center",
+            position: "relative",
+            marginTop: "10%",
+          }}
+        >
+          <Container>
+            <h4>
+              Set your device's volume to the 50%. Click PLAY to listen to an
+              audio sample.
+            </h4>
+            <h4>
+              Then, move the slider below to a comfortable listening level.
+              After that, click NEXT to begin the test.
+            </h4>
+          </Container>
+          <VolumeSlider
+            handleVolume={this.handleVolume}
+            style={{ marginLeft: "30%" }}
+          />
           {audioPlay ? (
             <Button
               variant="contained"
@@ -124,33 +134,8 @@ class VolumeAdjustment extends React.Component {
             Next
           </Button>
         </div>
-      </div>
-    );
-  };
-
-  readyToStart = () => {
-    return (
-      <Container>
-        <h6 className="font-weight-light">
-          The activity is about to begin. Please WAIT until the clip has finished
-          playing before typing the numbers you hear. You can't change your
-          response once you've entered it.
-        </h6>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ margin: 5, width: 150, backgroundColor: "black" }}
-          onClick={this.props.handleNext}
-        >
-          OK
-        </Button>
       </Container>
     );
-  };
-
-  render() {
-    const { done } = this.state;
-    return done ? this.readyToStart() : this.askAudioOutput();
   }
 }
 

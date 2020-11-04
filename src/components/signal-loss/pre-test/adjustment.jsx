@@ -47,14 +47,11 @@ class VolumeAdjustment extends React.Component {
     const { audioPlay } = this.state;
     return (
       <Container>
-        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
-          5
-        </h2>
         <div
           style={{
             textAlign: "center",
             position: "relative",
-            marginTop: "10%",
+            marginTop: "20%",
           }}
         >
           <Container>
