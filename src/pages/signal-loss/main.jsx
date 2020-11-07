@@ -1,8 +1,11 @@
 import React from "react";
-import AudioLoss from "../../components/signal-loss/test/audioloss";
-import Source from "../../components/signal-loss/test/source";
+import AudioLoss1 from "../../components/signal-loss/test/audioloss1";
+import AudioLoss2 from "../../components/signal-loss/test/audioloss2";
+import Source1 from "../../components/signal-loss/test/source1";
+import Source2 from "../../components/signal-loss/test/source2";
 import Adjustment from "../../components/signal-loss/pre-test/adjustment";
 import Questions from "../../components/signal-loss/pre-test/questions";
+import Test from "../../components/signal-loss/test/test";
 import End from "../../components/signal-loss/post-test/end";
 import axios from "axios";
 
@@ -22,8 +25,26 @@ class Main extends React.Component {
       dbs3: [],
       dbs4: [],
       questions: {},
-      aids: null
+      aids: null,
+      order: []
     };
+  }
+  shuffle = (array) => {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  }
+
+  componentDidMount = () => {
+    const order = ["AudioLoss1", "AudioLoss2", "Source1", "Source2"];
+    this.shuffle(order);
+    this.setState({ order });
   }
 
   handleAdjustClick = (volume) => {
@@ -32,40 +53,53 @@ class Main extends React.Component {
   }
 
   handleQuestions = (questions, aids) => {
-    this.setState({ questions, aids, process: "CRM1" });
+    this.setState({ questions, aids, process: "test" });
+  }
+
+  handleTest = () => {
+    this.setState({ process: "CRM1" });
   }
 
   handleCRM1Click = (SNR, timer, dbs) => {
-    console.log("handleCRM1Click works");
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer1: timer, dbs1: dbs, process: "CRM2" }, () => console.log(this.state.process))
+    this.setState({ SNR: newSNR, timer1: timer, dbs1: dbs, process: "CRM2" })
   }
   handleCRM2Click = (SNR, timer, dbs) => {
-    console.log("handleCRM2Click works");
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
     this.setState({ SNR: newSNR, timer2: timer, dbs2: dbs, process: "CRM3" })
   }
   handleCRM3Click = (SNR, timer, dbs) => {
-    console.log("handleCRM3Click works");
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
     this.setState({ SNR: newSNR, timer3: timer, dbs3: dbs, process: "CRM4" })
   }
   handleCRM4Click = async (SNR, timer, dbs) => {
-    console.log("handleCRM4Click works");
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
     await this.setState({ SNR: newSNR, timer4: timer, dbs4: dbs })
 
     // save data into database
-    const { timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids } = this.state;
+    const { timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, order } = this.state;
     await axios.post("/api/sentence/user/data", {
-      timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, SNR: this.state.SNR
+      order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, SNR: this.state.SNR
     });
 
     this.setState({ process: "end" });
+  }
+
+  returnTrainingMode = (num, func) => {
+    const { order, volume } = this.state;
+    if (order[num] === "AudioLoss1") {
+      return <AudioLoss1 volume={volume} handleClick={func} cycle={"AudioLoss"} />;
+    } else if (order[num] === "AudioLoss2") {
+      return <AudioLoss2 volume={volume} handleClick={func} cycle={"AudioLoss"} />;
+    } else if (order[num] === "Source1") {
+      return <Source1 volume={volume} handleClick={func} cycle={"Source"} />;
+    } else if (order[num] === "Source2") {
+      return <Source2 volume={volume} handleClick={func} cycle={"Source"} />;
+    }
   }
 
   renderProcess = () => {
@@ -75,14 +109,16 @@ class Main extends React.Component {
         return <Adjustment handleClick={this.handleAdjustClick} />
       case "questions":
         return <Questions handleClick={this.handleQuestions} />
+      case "test":
+        return <Test volume={volume} handleClick={this.handleTest} />
       case "CRM1":
-        return <AudioLoss volume={volume} handleClick={this.handleCRM1Click} cycle={"1"} />;
-      case "CRM3":
-        return <AudioLoss volume={volume} handleClick={this.handleCRM3Click} cycle={"3"} />;
+        return this.returnTrainingMode(0, this.handleCRM1Click);
       case "CRM2":
-        return <Source volume={volume} handleClick={this.handleCRM2Click} cycle={"2"} />;
+        return this.returnTrainingMode(1, this.handleCRM2Click);
+      case "CRM3":
+        return this.returnTrainingMode(2, this.handleCRM3Click);
       case "CRM4":
-        return <Source volume={volume} handleClick={this.handleCRM4Click} cycle={"4"} />;
+        return this.returnTrainingMode(3, this.handleCRM4Click);
       case "end":
         return <End />
       default:

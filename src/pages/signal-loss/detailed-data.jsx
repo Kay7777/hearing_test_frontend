@@ -37,13 +37,13 @@ class Data extends React.Component {
               }
               <h4>Hearing aids: {String(data.aids)}</h4>
               <br />
-              <Table SNR={data.SNR[0]} timer={data.timer1} decibel={data.dbs1} cycle={"1"} />
+              <Table SNR={data.SNR[0]} timer={data.timer1} decibel={data.dbs1} cycle={data.order[0]} />
               <br />
-              <Table SNR={data.SNR[1]} timer={data.timer2} decibel={data.dbs2} cycle={"2"} />
+              <Table SNR={data.SNR[1]} timer={data.timer2} decibel={data.dbs2} cycle={data.order[1]} />
               <br />
-              <Table SNR={data.SNR[2]} timer={data.timer3} decibel={data.dbs3} cycle={"3"} />
+              <Table SNR={data.SNR[2]} timer={data.timer3} decibel={data.dbs3} cycle={data.order[2]} />
               <br />
-              <Table SNR={data.SNR[3]} timer={data.timer4} decibel={data.dbs4} cycle={"4"} />
+              <Table SNR={data.SNR[3]} timer={data.timer4} decibel={data.dbs4} cycle={data.order[3]} />
             </div>
             :
             <div>Loading ...</div>

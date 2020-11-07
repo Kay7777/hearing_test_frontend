@@ -1,10 +1,5 @@
 import React from "react";
-import { CircularProgress, Snackbar } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { CircularProgress } from "@material-ui/core";
 
 class TestMain extends React.Component {
     constructor(props) {
@@ -47,27 +42,14 @@ class TestMain extends React.Component {
         this.playAudio();
     }
 
-    componentDidUpdate = () => {
-        if (this.state.time >= 5 && this.state.alert === false && this.state.once === false) {
-            this.setState({ alert: true, once: true });
-        }
-    }
-
     startTimer = () => {
-        this.timer = setInterval(
-            () => {
-                this.setState({
-                    time: this.state.time + 0.01,
-                })
-            },
-            10
-        );
+        this.setState({ time: new Date().getTime() });
     };
     stopTimer = () => {
-        clearInterval(this.timer);
+        this.setState({ time: new Date().getTime() - this.state.time });
     };
     resetTimer = () => {
-        this.setState({ time: 0, alert: false, once: false });
+        this.setState({ time: 0, alert: false });
     };
 
     playAudio = async () => {
@@ -85,18 +67,19 @@ class TestMain extends React.Component {
         await maskAudio.play();
         setTimeout(() => {
             maskAudio.pause();
-            this.setState({ userStart: true });
             this.startTimer();
+            this.setState({ userStart: true });
         }, sourceAudio.duration * 1000);
     }
 
     handleClick = async (num) => {
         const { questions, index, timer, lastCorrectness, traversals } = this.state;
-        this.setState({ userStart: false });
-        this.stopTimer();
-        timer.push(Number(this.state.time).toFixed(3));
-        this.resetTimer();
-        this.setState({ timer });
+        await this.setState({ userStart: false });
+        await this.stopTimer();
+        console.log(this.state.time);
+        await timer.push(this.state.time);
+        await this.resetTimer();
+        await this.setState({ timer });
         const correct = questions[index] === num;
         let sourceVolume;
         if (correct) {
@@ -117,7 +100,7 @@ class TestMain extends React.Component {
             sourceVolume = this.goEasier();
         }
         await this.setState({ index: index + 1, sourceVolume });
-        if (this.state.traversals >= 3) {
+        if (this.state.traversals >= 25) {
             const { dbs } = this.state;
             let sum = 0;
             if (dbs.length >= 10) {
@@ -143,7 +126,7 @@ class TestMain extends React.Component {
         const { sourceVolume, index, dbs } = this.state;
         dbs.push(dbs[index] + 3);
         this.setState({ dbs });
-        if (sourceVolume * 10 ** (2 / 20) > 1) {
+        if (sourceVolume * 10 ** (3 / 20) > 1) {
             return 1;
         } else {
             return sourceVolume * 10 ** (3 / 20);
@@ -217,15 +200,6 @@ class TestMain extends React.Component {
                             </div>
                         </div>
                 }
-                <Snackbar
-                    open={this.state.alert}
-                    autoHideDuration={3000}
-                    onClose={this.handleCloseAlert}
-                >
-                    <Alert onClose={this.handleClose} severity="info">
-                        It's Okay to Guess
-                    </Alert>
-                </Snackbar>
             </div>
         )
     }
