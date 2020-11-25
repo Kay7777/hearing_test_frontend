@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Container } from "@material-ui/core";
 
 class TestMain extends React.Component {
     constructor(props) {
@@ -54,14 +55,6 @@ class TestMain extends React.Component {
         if (this.state.time >= 5 && this.state.alert === false && this.state.once === false) {
             this.setState({ alert: true, once: true });
         }
-        if (this.state.stage === "loading" && this.state.loading === false) {
-            setTimeout(() => {
-                this.setState({ stage: "test" });
-                this.playAudio();
-            }, 3000)
-        } else if (this.state.stage === "done") {
-            setTimeout(() => this.props.handleClick(), 3000)
-        }
     }
 
     playAudio = async () => {
@@ -74,7 +67,7 @@ class TestMain extends React.Component {
         let sourceAudio = new Audio(process.env.PUBLIC_URL + "/source-audios/" + question + ".wav");
         const maskAudio = this.state.noise;
         sourceAudio.volume = sourceVolume;
-        maskAudio.volume = maskVolume;
+        maskAudio.volume = 0.5 * maskVolume;
         await sourceAudio.play();
         await maskAudio.play();
         setTimeout(() => {
@@ -91,7 +84,7 @@ class TestMain extends React.Component {
         await this.resetTimer();
         await this.setState({ userStart: false });
         await this.setState({ index: index + 1, traversals: traversals + 1 });
-        if (this.state.traversals >= 5) {
+        if (this.state.traversals >= 3) {
             this.setState({ stage: "done" });
         } else {
             setTimeout(() => {
@@ -110,14 +103,41 @@ class TestMain extends React.Component {
         return (
             <div>
                 {
-                    loading || stage === "loading"
+                    stage === "loading"
                         ?
-                        <div>
-                            This is a test, you can try a couple of questions before you jump into the real hearing test.
-                        </div>
+                        <Container style={{ marginTop: "5%", marginLeft: "5%", marginRight: "5%" }}>
+                            <h4>
+                                The following is an example of what you will experience during the experiment. Listen for the call sign or name Baron. For example, Baron goes to red 3. Use your mouse and choose the white number 5 on the computer screen. Do this as quickly and accurately as possible.
+                            </h4><br />
+                            {
+                                loading ?
+                                    null :
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ margin: 20, width: 150, backgroundColor: "black" }}
+                                        onClick={() => {
+                                            this.setState({ stage: "test" });
+                                            this.playAudio();
+                                        }}
+                                    >
+                                        Next
+                                </Button>
+                            }
+                        </Container>
                         :
                         stage === "done" ?
-                            <div>Now, we are going to the real hearing test!</div>
+                            <Container style={{ marginTop: "5%", marginLeft: "5%", marginRight: "5%" }}>
+                                <h4>You are now ready to start the experiment. Your call sign will always be Baron. Follow the instructions as quickly and accurately as possible. If you aren’t sure, make a guess! Press NEXT when you are ready to start.</h4><br />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ margin: 20, width: 150, backgroundColor: "black" }}
+                                    onClick={this.props.handleClick}
+                                >
+                                    Next
+                                </Button>
+                            </Container>
                             :
                             <div style={{ backgroundColor: "grey", position: "fixed", height: "100%", width: "100%" }}>
                                 <div className="row" style={{ height: "25%" }}>

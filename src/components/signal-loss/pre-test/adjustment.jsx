@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, TextField, InputLabel, Select, MenuItem } from "@material-ui/core";
 import VolumeSlider from "../../../assets/signal-loss/volume-slider";
 
 class VolumeAdjustment extends React.Component {
@@ -10,6 +10,7 @@ class VolumeAdjustment extends React.Component {
       audio: new Audio(process.env.PUBLIC_URL + "/audios/adjust.wav"),
       audioPlay: false,
       audioVolume: 0.1,
+      output: null
     };
   }
   componentDidMount = () => {
@@ -38,13 +39,38 @@ class VolumeAdjustment extends React.Component {
     this.setState({ audioVolume: volume / 100 });
   };
 
-  handleNext = () => {
-    this.state.audio.pause();
-    this.props.handleClick(this.state.audioVolume);
-  };
+  handleChangeOutput = (e) => {
+    this.setState({ output: e.target.value });
+  }
+
+  renderButton = () => {
+    const { output, audioVolume } = this.state;
+    if (output !== null) {
+      return <Button
+        variant="contained"
+        color="primary"
+        style={{ margin: 20, width: 150, backgroundColor: "black" }}
+        onClick={() => {
+          this.state.audio.pause();
+          this.props.handleClick(output, audioVolume)
+        }}
+      >
+        Next
+    </Button>
+    } else {
+      return <Button
+        variant="contained"
+        color="primary"
+        disabled
+        style={{ margin: 20, width: 150 }}
+      >
+        Next
+    </Button>
+    }
+  }
 
   render() {
-    const { audioPlay } = this.state;
+    const { audioPlay, output } = this.state;
     return (
       <Container>
         <div
@@ -55,19 +81,34 @@ class VolumeAdjustment extends React.Component {
           }}
         >
           <Container>
-            <h4>
-              Set your device's volume to the 50%. Click PLAY to listen to an
-              audio sample.
-            </h4>
-            <h4>
-              Then, move the slider below to a comfortable listening level.
-              After that, click NEXT to begin the test.
-            </h4>
+            <h5>You can use either speakers or headphones to complete this experiment. Headphones will work best. Please select what you are using: headphones or speakers</h5>
+            <div>
+              <Select
+                labelId="demo-controlled-open-select-label"
+                id="demo-controlled-open-select"
+                value={output}
+                onChange={this.handleChangeOutput}
+                style={{ width: 150 }}
+              >
+                <MenuItem value="headphone">headphone</MenuItem>
+                <MenuItem value="speaker">speaker</MenuItem>
+              </Select>
+            </div>
+            <br />
+            <div>
+              <h5>
+                Please set your volume to approximately 50%. Click PLAY to listen to an audio sample.
+            </h5>
+              <h5>
+                Move the slider bar to your most comfortable listening level. Once comfortable, click NEXT to begin the study.
+            </h5>
+            </div>
+            <VolumeSlider
+              handleVolume={this.handleVolume}
+              style={{ marginLeft: "30%" }}
+            />
           </Container>
-          <VolumeSlider
-            handleVolume={this.handleVolume}
-            style={{ marginLeft: "30%" }}
-          />
+          <br />
           {audioPlay ? (
             <Button
               variant="contained"
@@ -91,14 +132,7 @@ class VolumeAdjustment extends React.Component {
                 Play
               </Button>
             )}
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ margin: 5, width: 150, backgroundColor: "black" }}
-            onClick={this.handleNext}
-          >
-            Next
-          </Button>
+          {this.renderButton()}
         </div>
       </Container>
     );

@@ -100,7 +100,7 @@ class TestMain extends React.Component {
             sourceVolume = this.goEasier();
         }
         await this.setState({ index: index + 1, sourceVolume });
-        if (this.state.traversals >= 25) {
+        if (this.state.traversals >= 3) {
             const { dbs } = this.state;
             let sum = 0;
             if (dbs.length >= 10) {
@@ -152,10 +152,7 @@ class TestMain extends React.Component {
                 {
                     loading
                         ?
-                        <div>
-                            <CircularProgress />
-                            <h2>Loading data ... (this may take half a minute when you first time do the test)</h2>
-                        </div>
+                        <CircularProgress />
                         :
                         <div style={{ backgroundColor: "grey", position: "fixed", height: "100%", width: "100%" }}>
                             <div className="row" style={{ height: "25%" }}>
