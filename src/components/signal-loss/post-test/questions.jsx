@@ -91,7 +91,7 @@ class Questions extends React.Component {
               <h6 style={{ marginTop: 10, marginLeft: 15 }}>
                 Really Hard
                   </h6>
-              <h6 style={{ marginTop: 10, marginLeft: "20%" }}>
+              <h6 style={{ marginTop: 10, marginLeft: "25%" }}>
                 Really Easy
                   </h6>
             </div>
@@ -110,7 +110,7 @@ class Questions extends React.Component {
               <h6 style={{ marginTop: 10, marginLeft: 15 }}>
                 Minimal
                   </h6>
-              <h6 style={{ marginTop: 10, marginLeft: "20%" }}>
+              <h6 style={{ marginTop: 10, marginLeft: "30%" }}>
                 Maximum
                   </h6>
             </div>

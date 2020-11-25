@@ -162,7 +162,7 @@ class Main extends React.Component {
       case "CRM3":
         return this.returnTrainingMode(2, this.handleCRM3Click);
       case "midpage3":
-        return <MidPage handleClick={this.handleMidPage3Click} section={"last"} />;
+        return <MidPage handleClick={this.handleMidPage3Click} section={"four"} />;
       case "CRM4":
         return this.returnTrainingMode(3, this.handleCRM4Click);
       case "postquestion":
