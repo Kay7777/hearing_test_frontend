@@ -100,7 +100,7 @@ class TestMain extends React.Component {
             sourceVolume = this.goEasier();
         }
         await this.setState({ index: index + 1, sourceVolume });
-        if (this.state.traversals >= 3) {
+        if (this.state.traversals >= 25) {
             const { dbs } = this.state;
             let sum = 0;
             if (dbs.length >= 10) {
