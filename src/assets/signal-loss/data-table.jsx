@@ -22,27 +22,53 @@ export default function SimpleTable(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell align="left">ID</TableCell>
+            <TableCell align="left">Output</TableCell>
+            <TableCell align="left">Aids</TableCell>
+            <TableCell align="left">Birth</TableCell>
+            <TableCell align="left">Gender</TableCell>
+            <TableCell align="left">Province</TableCell>
             <TableCell align="left">CRM</TableCell>
             <TableCell align="left">SNR</TableCell>
-            <TableCell align="left">Decibel</TableCell>
-            <TableCell align="left">Timer</TableCell>
+            <TableCell align="left">Decibel 1</TableCell>
+            <TableCell align="left">Decibel 2</TableCell>
+            <TableCell align="left">Decibel 3</TableCell>
+            <TableCell align="left">Decibel 4</TableCell>
+            <TableCell align="left">Timer 1</TableCell>
+            <TableCell align="left">Timer 2</TableCell>
+            <TableCell align="left">Timer 3</TableCell>
+            <TableCell align="left">Timer 4</TableCell>
+            <TableCell align="left">Pre-questions</TableCell>
+            <TableCell align="left">Post-questions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell align="left">{props.cycle}</TableCell>
-            <TableCell align="left">{props.SNR}</TableCell>
-            <TableCell align="left">
-              {
-                props.decibel.map(decibel => decibel + "/")
-              }
-            </TableCell>
-            <TableCell align="left">
-              {
-                props.timer.map(timer => timer + "/")
-              }
-            </TableCell>
-          </TableRow>
+          {
+            props.data.map(data => {
+              return (
+                <TableRow>
+                  <TableCell align="left">{data.ID}</TableCell>
+                  <TableCell align="left">{data.output}</TableCell>
+                  <TableCell align="left">{data.aids}</TableCell>
+                  <TableCell align="left">{data.birth}</TableCell>
+                  <TableCell align="left">{data.gender}</TableCell>
+                  <TableCell align="left">{data.province}</TableCell>
+                  <TableCell align="left">{data.order.map((cycle) => cycle + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.SNR).map((SNR) => SNR + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.dbs1).map(db => db + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.dbs2).map(db => db + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.dbs3).map(db => db + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.dbs4).map(db => db + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.timer1).map(time => time + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.timer2).map(time => time + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.timer3).map(time => time + "/")}</TableCell>
+                  <TableCell align="left">{JSON.parse(data.timer4).map(time => time + "/")}</TableCell>
+                  <TableCell align="left">{Object.keys(data.preQuestion).map(key => data.preQuestion[key] + "/")}</TableCell>
+                  <TableCell align="left">{Object.keys(data.postQuestion).map(key => data.postQuestion[key] + "/")}</TableCell>
+                </TableRow>
+              )
+            })
+          }
         </TableBody>
       </Table>
     </TableContainer>

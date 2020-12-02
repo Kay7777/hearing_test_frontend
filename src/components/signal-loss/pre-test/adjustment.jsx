@@ -97,7 +97,7 @@ class VolumeAdjustment extends React.Component {
             <br />
             <div>
               <h5>
-                Please set your volume to approximately 50%. Click PLAY to listen to an audio sample.
+                Please set your computer volume to approximately 50%. Click PLAY to listen to an audio sample.
             </h5>
               <h5>
                 Move the slider bar to your most comfortable listening level. Once comfortable, click NEXT to begin the study.

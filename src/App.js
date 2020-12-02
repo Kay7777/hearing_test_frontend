@@ -13,7 +13,7 @@ import PostTest2 from "./components/digits/database/post-test-2";
 import PostTest3 from "./components/digits/database/post-test-3";
 import UserData from "./components/digits/database/user-data";
 import Database from "./pages/digits/database";
-import Footer from "./components/partials/footer";
+import { Beforeunload } from 'react-beforeunload';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,12 +21,16 @@ class App extends React.Component {
     this.state = {};
   }
 
+  beforeunload = (e) => {
+    e.preventDefault();
+    e.returnValue = true;
+  };
+
   render() {
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Main} />
-          <Route exact path="/signalloss" component={SignalLossMain} />
           <Route exact path="/signalloss/database" component={SignalLossData} />
           <Route exact path="/signalloss/database/:id" component={SignalLossDetailedData} />
           <Route exact path="/signalloss/test" component={SignalLossTest} />
@@ -38,9 +42,10 @@ class App extends React.Component {
           <Route exact path="/database/posttest2" component={PostTest2} />
           <Route exact path="/database/posttest3" component={PostTest3} />
           <Route exact path="/database/userdata" component={UserData} />
+          <Beforeunload onBeforeunload={() => ""} >
+            <Route exact path="/signalloss" component={SignalLossMain} />
+          </Beforeunload>
         </Switch>
-        <Footer />
-
       </BrowserRouter>
     );
   }

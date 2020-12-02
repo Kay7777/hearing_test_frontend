@@ -1,5 +1,5 @@
 import React from "react";
-import Welcome from "../../components/digits/start/welcome";
+import Welcome from "../../components/signal-loss/pre-test/welcome";
 import AudioLoss1 from "../../components/signal-loss/test/audioloss1";
 import AudioLoss2 from "../../components/signal-loss/test/audioloss2";
 import Source1 from "../../components/signal-loss/test/source1";
@@ -126,13 +126,13 @@ class Main extends React.Component {
   returnTrainingMode = (num, func) => {
     const { order, volume } = this.state;
     if (order[num] === "AudioLoss1") {
-      return <AudioLoss1 volume={volume} handleClick={func} cycle={"AudioLoss"} />;
+      return <AudioLoss1 volume={volume} handleClick={func} cycle={"AudioLoss"} block={num} />;
     } else if (order[num] === "AudioLoss2") {
-      return <AudioLoss2 volume={volume} handleClick={func} cycle={"AudioLoss"} />;
+      return <AudioLoss2 volume={volume} handleClick={func} cycle={"AudioLoss"} block={num} />;
     } else if (order[num] === "Source1") {
-      return <Source1 volume={volume} handleClick={func} cycle={"Source"} />;
+      return <Source1 volume={volume} handleClick={func} cycle={"Source"} block={num} />;
     } else if (order[num] === "Source2") {
-      return <Source2 volume={volume} handleClick={func} cycle={"Source"} />;
+      return <Source2 volume={volume} handleClick={func} cycle={"Source"} block={num} />;
     }
   }
 

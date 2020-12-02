@@ -1,5 +1,5 @@
 import React from "react";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Avatar, Button } from "@material-ui/core";
 
 class TestMain extends React.Component {
     constructor(props) {
@@ -18,7 +18,8 @@ class TestMain extends React.Component {
             alert: false,
             once: false,
             traversals: 0,
-            lastCorrectness: null
+            lastCorrectness: null,
+            pause: false
         }
     }
 
@@ -145,55 +146,111 @@ class TestMain extends React.Component {
         this.setState({ alert: false });
     };
 
+    handlePause = () => {
+        this.setState({ pause: true });
+        if (this.state.userStart) {
+            this.stopTimer();
+        }
+    }
+
+    handleResume = () => {
+        this.setState({ pause: false });
+        if (this.state.userStart) {
+            this.setState({ time: new Date().getTime() - this.state.time });
+        }
+    }
+
     render() {
-        const { loading, userStart } = this.state;
+        const { traversals, loading, userStart, pause } = this.state;
         return (
             <div>
                 {
                     loading
                         ?
-                        <CircularProgress />
+                        <div>
+                            <CircularProgress />
+                        </div>
                         :
-                        <div style={{ backgroundColor: "grey", position: "fixed", height: "100%", width: "100%" }}>
-                            <div className="row" style={{ height: "25%" }}>
-                                <button disabled={!userStart} value="001" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
-                                <button disabled={!userStart} value="002" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
-                                <button disabled={!userStart} value="003" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
-                                <button disabled={!userStart} value="004" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
-                                <button disabled={!userStart} value="005" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
-                                <button disabled={!userStart} value="006" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
-                                <button disabled={!userStart} value="007" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
-                                <button disabled={!userStart} value="008" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
+                        <div>
+                            <div id="buttons" style={{ position: "fixed", height: "80%", width: "100%", backgroundColor: "#C2CAD0" }}>
+                                <div className="row" style={{ height: "25%" }}>
+                                    <button disabled={!userStart || pause} value="001" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
+                                    <button disabled={!userStart || pause} value="002" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
+                                    <button disabled={!userStart || pause} value="003" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
+                                    <button disabled={!userStart || pause} value="004" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
+                                    <button disabled={!userStart || pause} value="005" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
+                                    <button disabled={!userStart || pause} value="006" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
+                                    <button disabled={!userStart || pause} value="007" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
+                                    <button disabled={!userStart || pause} value="008" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "red", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
+                                </div>
+                                <div className="row" style={{ height: "25%" }}>
+                                    <button disabled={!userStart || pause} value="011" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
+                                    <button disabled={!userStart || pause} value="012" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
+                                    <button disabled={!userStart || pause} value="013" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
+                                    <button disabled={!userStart || pause} value="014" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
+                                    <button disabled={!userStart || pause} value="015" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
+                                    <button disabled={!userStart || pause} value="016" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
+                                    <button disabled={!userStart || pause} value="017" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
+                                    <button disabled={!userStart || pause} value="018" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
+                                </div>
+                                <div className="row" style={{ height: "25%" }}>
+                                    <button disabled={!userStart || pause} value="021" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
+                                    <button disabled={!userStart || pause} value="022" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
+                                    <button disabled={!userStart || pause} value="023" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
+                                    <button disabled={!userStart || pause} value="024" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
+                                    <button disabled={!userStart || pause} value="025" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
+                                    <button disabled={!userStart || pause} value="026" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
+                                    <button disabled={!userStart || pause} value="027" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
+                                    <button disabled={!userStart || pause} value="028" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
+                                </div>
+                                <div className="row" style={{ height: "25%" }}>
+                                    <button disabled={!userStart || pause} value="031" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
+                                    <button disabled={!userStart || pause} value="032" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
+                                    <button disabled={!userStart || pause} value="033" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
+                                    <button disabled={!userStart || pause} value="034" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
+                                    <button disabled={!userStart || pause} value="035" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
+                                    <button disabled={!userStart || pause} value="036" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
+                                    <button disabled={!userStart || pause} value="037" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
+                                    <button disabled={!userStart || pause} value="038" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
+                                </div>
                             </div>
-                            <div className="row" style={{ height: "25%" }}>
-                                <button disabled={!userStart} value="011" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
-                                <button disabled={!userStart} value="012" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
-                                <button disabled={!userStart} value="013" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
-                                <button disabled={!userStart} value="014" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
-                                <button disabled={!userStart} value="015" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
-                                <button disabled={!userStart} value="016" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
-                                <button disabled={!userStart} value="017" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
-                                <button disabled={!userStart} value="018" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "green", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
-                            </div>
-                            <div className="row" style={{ height: "25%" }}>
-                                <button disabled={!userStart} value="021" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
-                                <button disabled={!userStart} value="022" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
-                                <button disabled={!userStart} value="023" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
-                                <button disabled={!userStart} value="024" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
-                                <button disabled={!userStart} value="025" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
-                                <button disabled={!userStart} value="026" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
-                                <button disabled={!userStart} value="027" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
-                                <button disabled={!userStart} value="028" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "blue", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
-                            </div>
-                            <div className="row" style={{ height: "25%" }}>
-                                <button disabled={!userStart} value="031" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>1</button>
-                                <button disabled={!userStart} value="032" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>2</button>
-                                <button disabled={!userStart} value="033" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>3</button>
-                                <button disabled={!userStart} value="034" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>4</button>
-                                <button disabled={!userStart} value="035" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>5</button>
-                                <button disabled={!userStart} value="036" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>6</button>
-                                <button disabled={!userStart} value="037" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>7</button>
-                                <button disabled={!userStart} value="038" onClick={(e) => this.handleClick(e.target.value)} style={{ color: "white", border: "none", background: "none", width: "12.5%", fontSize: 80 }}>8</button>
+                            <div id="progress" className="row" style={{ position: "fixed", left: "5%", right: "5%", bottom: 10 }}>
+                                <h5>Progress⠀</h5>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 0 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 1 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 2 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 3 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 4 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 5 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 6 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 7 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 8 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 9 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 10 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 11 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 12 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 13 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 14 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 15 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 16 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 17 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 18 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 19 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 20 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 21 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 22 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 23 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 24 ? "blue" : "black" }}>⠀</Avatar>
+                                <h5>{traversals + 1}/25 Reversal in {this.props.block + 1}/4 Block</h5>
+                                {
+                                    userStart ?
+                                        pause ?
+                                            <Button style={{ marginLeft: 10 }} color="secondary" variant="outlined" onClick={this.handleResume}>Resume</Button>
+                                            :
+                                            <Button style={{ marginLeft: 10 }} color="primary" variant="outlined" onClick={this.handlePause}>Pause</Button>
+                                        :
+                                        <Button style={{ marginLeft: 10 }} disabled variant="outlined" >Pause</Button>
+                                }
                             </div>
                         </div>
                 }

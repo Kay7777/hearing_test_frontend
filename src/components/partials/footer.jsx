@@ -18,6 +18,7 @@ function Footer() {
       height: "10%",
       width: "100%",
     }}>
+      <img style={{ height: "100%", marginRight: "10%" }} src="https://www.ualberta.ca/media-library/ualberta-logo.svg" />
       <img style={{ height: "100%", marginRight: "10%" }} src={process.env.PUBLIC_URL + "/pictures/covenant.png"} />
       <img style={{ height: "100%" }} src={process.env.PUBLIC_URL + "/pictures/irsm.png"} />
     </div>
