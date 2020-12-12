@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Avatar } from "@material-ui/core";
+import { Button, Container, Avatar, LinearProgress } from "@material-ui/core";
 
 class TestMain extends React.Component {
     constructor(props) {
@@ -19,16 +19,20 @@ class TestMain extends React.Component {
             once: false,
             traversals: 0,
             lastCorrectness: null,
-            stage: "loading"
+            stage: "loading",
+            process: 0
         }
     }
 
     componentDidMount = async () => {
+        let num = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 1; j < 9; j++) {
                 const audio3 = new Audio(process.env.PUBLIC_URL + "/source-audios/0" + i.toString() + j.toString() + ".wav");
                 audio3.volume = 0;
                 try {
+                    num += 1;
+                    await this.setState({ process: num });
                     await audio3.play();
                     audio3.pause();
                 } catch (e) { console.log(e, "for", i, j) }
@@ -99,7 +103,7 @@ class TestMain extends React.Component {
     };
 
     render() {
-        const { loading, userStart, stage, traversals } = this.state;
+        const { loading, userStart, stage, traversals, process } = this.state;
         return (
             <div>
                 {
@@ -116,7 +120,7 @@ class TestMain extends React.Component {
                                 <br />
                                 {
                                     loading ?
-                                        null :
+                                        <LinearProgress variant="determinate" value={Math.ceil(process / 32 * 100)} /> :
                                         <Button
                                             variant="contained"
                                             color="primary"
