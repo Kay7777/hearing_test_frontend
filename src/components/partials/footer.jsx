@@ -7,20 +7,17 @@ function Footer() {
     height: '10%',
     width: '100%',
   }}>
-    <div style={{
-      backgroundColor: "#F8F8F8",
-      borderTop: "1px solid #E7E7E7",
-      textAlign: "center",
-      padding: "2px",
+    <div className="row" style={{
+      padding: 20,
       position: "fixed",
-      left: "0",
-      bottom: "0",
-      height: "10%",
-      width: "100%",
+      left: 0,
+      bottom: 0,
+      right: 0
+
     }}>
-      <img style={{ height: "100%", marginRight: "10%" }} src="https://www.ualberta.ca/media-library/ualberta-logo.svg" />
-      <img style={{ height: "100%", marginRight: "10%" }} src={process.env.PUBLIC_URL + "/pictures/covenant.png"} />
-      <img style={{ height: "100%" }} src={process.env.PUBLIC_URL + "/pictures/irsm.png"} />
+      <img style={{ height: 50, width: 500, marginTop: 30, marginLeft: 5 }} src={process.env.PUBLIC_URL + "/pictures/rehab.png"} />
+      <img style={{ height: 100, width: 233, marginTop: 10, marginLeft: 20 }} src={process.env.PUBLIC_URL + "/pictures/covenant.png"} />
+      <img style={{ height: 100, width: 300, marginTop: 10, marginLeft: 20 }} src={process.env.PUBLIC_URL + "/pictures/irsm.png"} />
     </div>
   </div>
 }
