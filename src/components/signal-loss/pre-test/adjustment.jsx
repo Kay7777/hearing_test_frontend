@@ -81,7 +81,7 @@ class VolumeAdjustment extends React.Component {
           }}
         >
           <Container>
-            <h5>You can use either speakers or headphones to complete this experiment. Headphones will work best. Please select what you are using: headphones or speakers</h5>
+            <h5>You can use either speakers or headphones to complete this experiment. Headphones will work best. Please answer each of the questions below by moving the slider bar.</h5>
             <div>
               <Select
                 labelId="demo-controlled-open-select-label"

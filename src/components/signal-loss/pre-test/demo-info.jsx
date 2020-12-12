@@ -65,7 +65,8 @@ class DemoInfo extends React.Component {
           }}
         >
           <h3>Your participant ID is: {ID}</h3>
-          <h5>(please note this down if you wish to withdraw your data)</h5>
+          <h5>Please write this down to if you wish to withdraw your data after you have completed the experiment.</h5>
+          <h5>Please answer the questions below using the provided dropdown boxes.</h5>
           <br />
           <FormControl>
             <InputLabel id="demo-simple-select-label">Year of Birth</InputLabel>
@@ -195,7 +196,7 @@ class DemoInfo extends React.Component {
           </div>
           <br />
           <div>
-            <InputLabel id="label">Province/Territories of Residence</InputLabel>
+            <InputLabel id="label">Province/Territory of Residence</InputLabel>
             <Select
               labelId="demo-controlled-open-select-label"
               id="demo-controlled-open-select location"
@@ -215,7 +216,7 @@ class DemoInfo extends React.Component {
               <MenuItem value="Northwest Territories">Northwest Territories</MenuItem>
               <MenuItem value="Nunavut">Nunavut</MenuItem>
               <MenuItem value="Yukon">Yukon</MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
+              <MenuItem value="Other">Other/Not Canada</MenuItem>
             </Select>
           </div>
           <br /><br />

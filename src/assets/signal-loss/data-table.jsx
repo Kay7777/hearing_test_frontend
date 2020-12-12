@@ -23,6 +23,7 @@ export default function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell align="left">ID</TableCell>
+            <TableCell align="left">Email</TableCell>
             <TableCell align="left">Output</TableCell>
             <TableCell align="left">Aids</TableCell>
             <TableCell align="left">Birth</TableCell>
@@ -48,6 +49,7 @@ export default function SimpleTable(props) {
               return (
                 <TableRow>
                   <TableCell align="left">{data.ID}</TableCell>
+                  <TableCell align="left">{data.email}</TableCell>
                   <TableCell align="left">{data.output}</TableCell>
                   <TableCell align="left">{data.aids}</TableCell>
                   <TableCell align="left">{data.birth}</TableCell>

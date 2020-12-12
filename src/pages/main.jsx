@@ -5,9 +5,10 @@ import { Card, CardContent, Typography, CardActions, Button } from "@material-ui
 const Main = (props) => {
   return (
     <div>
-      <div className="jumbotron"><h1>Welcome to Hearing Test</h1>
+      <div className="jumbotron"><h1>Welcome to our collection of hearing experiments</h1>
         <h5>
-          Tips: Please go to a desktop or laptop computer to complete any of these evaluations. It is recommended that you use any of the following browsers: Chrome, Edge, Firefox, Opera or Safari.
+          Instructions: Please use a desktop or laptop computer with
+          Chrome, Edge, Firefox, Opera or Safari to complete any of these evaluations.
         </h5>
       </div>
       <div className="row" style={{ paddingLeft: 100, paddingRight: 100 }}>

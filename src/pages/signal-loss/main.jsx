@@ -19,6 +19,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       ID: null,
+      email: "",
       process: "welcome",
       volume: 0.1,
       SNR: [],
@@ -60,8 +61,8 @@ class Main extends React.Component {
     }, 3000);
   }
 
-  handleICFClick = () => {
-    this.setState({ process: "demoinfo" });
+  handleICFClick = (email) => {
+    this.setState({ email, process: "demoinfo" });
   }
 
   handleDemoinfoClick = (ID, age, gender, province) => {
@@ -79,9 +80,9 @@ class Main extends React.Component {
 
   handlePostQuestions = async (postQuestion) => {
     // save data into database
-    const { output, ID, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, order, age, gender, province } = this.state;
+    const { output, email, ID, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, order, age, gender, province } = this.state;
     await axios.post("/api/sentence/user/data", {
-      output, ID, order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, preQuestion: questions, postQuestion, aids, SNR: this.state.SNR, age, gender, province
+      output, email, ID, order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, preQuestion: questions, postQuestion, aids, SNR: this.state.SNR, age, gender, province
     });
     this.setState({ process: "end" });
   }

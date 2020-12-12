@@ -85,7 +85,8 @@ class Questions extends React.Component {
             marginRight: "10%",
           }}
         >
-          <hr />
+          <h5>Please answer each of the questions below by moving the slider bar.</h5>
+          <br />
           {questions.map((question, index) => {
             return (
               <div style={{ marginTop: 10 }}>

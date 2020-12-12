@@ -109,9 +109,9 @@ class TestMain extends React.Component {
                             <div style={{ marginTop: "20%", marginLeft: "10%", marginRight: "10%" }}>
                                 <h4>
                                     The following is an example of what you will experience during the experiment.
-                                    Listen for the call sign or name Baron. For example, Ready Baron, go to red 3.
-                                    Use your mouse and choose the red number 3. On the computer screen.
-                                    This may take a couple minutes to load.
+                                    Listen for the call sign or name Baron. For example, “Ready Baron, go to red three.” Use your mouse an choose the red number 3 on
+                                    the computer screen. Please give this example a few minutes to load. A NEXT button will
+                                    appear when the trial is ready to start.
                                 </h4>
                                 <br />
                                 {
