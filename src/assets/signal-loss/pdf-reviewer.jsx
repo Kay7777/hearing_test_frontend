@@ -13,7 +13,8 @@ export default function MyApp() {
   return (
     <div id="pdf" >
       <Document
-        file="https://picspie.s3.ca-central-1.amazonaws.com/hearing+test/icf.pdf"
+        // file="https://picspie.s3.ca-central-1.amazonaws.com/hearing+test/icf.pdf"
+        file={process.env.PUBLIC_URL + "/docs/icf.pdf"}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page width={window.innerWidth} pageNumber={pageNumber} />
