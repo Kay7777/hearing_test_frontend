@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Container, Checkbox, TextField, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
+import PDF from "../../../assets/signal-loss/pdf-reviewer";
 
 class ICF extends React.Component {
   constructor(props) {
@@ -46,12 +47,11 @@ class ICF extends React.Component {
         <div>
           <br />
           <div id="icf" style={{
-            textAlign: "center",
-            position: "relative",
-            marginTop: "10%",
           }}>
-            <img style={{ width: "80%" }} src={process.env.PUBLIC_URL + "/pictures/icf1.png"} />
-            <img style={{ width: "80%" }} src={process.env.PUBLIC_URL + "/pictures/icf2.png"} />
+            <h6>Tips: If you think the size of PDF is small, please increase the width of your browser and reload the page.</h6>
+            <PDF />
+            {/* <img style={{ width: "80%" }} src={process.env.PUBLIC_URL + "/pictures/icf1.png"} />
+            <img style={{ width: "80%" }} src={process.env.PUBLIC_URL + "/pictures/icf2.png"} /> */}
           </div>
           <br />
           <div id="consents">

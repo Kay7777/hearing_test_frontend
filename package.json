@@ -17,6 +17,7 @@
     "react-bootstrap": "^1.4.0",
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
+    "react-pdf": "^5.1.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
