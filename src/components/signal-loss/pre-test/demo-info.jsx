@@ -2,7 +2,7 @@ import React from "react";
 import {
   Container,
   Button, FormControl,
-  InputLabel, Select, MenuItem
+  InputLabel, Select, MenuItem, TextField
 } from "@material-ui/core";
 
 class DemoInfo extends React.Component {
@@ -218,6 +218,17 @@ class DemoInfo extends React.Component {
               <MenuItem value="Yukon">Yukon</MenuItem>
               <MenuItem value="Other">Other/Not Canada</MenuItem>
             </Select>
+            <br />
+            {
+              province === "Other" ?
+                <TextField
+                  label="Location"
+                  onChange={(e) => this.setState({ province: e.target.value })}
+                  style={{ width: 300 }}
+                />
+                :
+                null
+            }
           </div>
           <br /><br />
           {this.renderButton()}

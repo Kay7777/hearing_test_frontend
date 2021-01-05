@@ -13,7 +13,6 @@ function Footer() {
       left: 0,
       bottom: 0,
       right: 0
-
     }}>
       <img style={{ height: 50, width: 500, marginTop: 30, marginLeft: 5 }} src={process.env.PUBLIC_URL + "/pictures/rehab.png"} />
       <img style={{ height: 100, width: 233, marginTop: 10, marginLeft: 20 }} src={process.env.PUBLIC_URL + "/pictures/covenant.png"} />

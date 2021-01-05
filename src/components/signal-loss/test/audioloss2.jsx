@@ -241,7 +241,7 @@ class TestMain extends React.Component {
                                 <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 22 ? "blue" : "black" }}>⠀</Avatar>
                                 <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 23 ? "blue" : "black" }}>⠀</Avatar>
                                 <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 24 ? "blue" : "black" }}>⠀</Avatar>
-                                <h5>{traversals + 1}/25 Reversal in {this.props.block + 1}/4 Block</h5>
+                                <h5>{traversals + 1}/25 Trails in {this.props.block + 1}/4 Block</h5>
                                 {
                                     userStart ?
                                         pause ?
