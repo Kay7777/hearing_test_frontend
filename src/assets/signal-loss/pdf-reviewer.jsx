@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { Button } from "@material-ui/core";
 
-export default function MyApp() {
+export default function MyApp(props) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
-  function onDocumentLoadSuccess({ numPages }) {
+  const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+  }
+
+  const handleNext = () => {
+    setPageNumber(pageNumber + 1);
+    props.showConsents();
   }
 
   return (
@@ -30,7 +35,7 @@ export default function MyApp() {
         }
         <p>Page {pageNumber} of {numPages}</p>
         {pageNumber < numPages ?
-          <Button variant="contained" onClick={() => { setPageNumber(pageNumber + 1) }} >Next</Button>
+          <Button variant="contained" onClick={handleNext} >Next</Button>
           :
           null
         }

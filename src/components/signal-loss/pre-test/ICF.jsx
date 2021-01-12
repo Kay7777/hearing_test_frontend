@@ -13,7 +13,8 @@ class ICF extends React.Component {
       checked5: false,
       checked6: false,
       checked7: false,
-      email: ""
+      email: "",
+      show: false
     }
   }
 
@@ -41,122 +42,129 @@ class ICF extends React.Component {
   }
 
   render() {
-    const { checked1, checked2, checked3, checked4, checked5, checked6, checked7 } = this.state;
+    const { checked1, checked2, checked3, checked4, checked5, checked6, checked7, show } = this.state;
     return (
       <Container>
         <div>
           <br />
-          <div id="icf" style={{
-          }}>
-            <h6>Tips: If you think the size of PDF is small, please increase the width of your browser and reload the page.</h6>
-            <PDF />
+          <div id="icf">
+            <div style={{ marginLeft: "10%", marginRight: "10%" }}>
+              <h5>Tips: If you think the size of PDF is small, please increase the width of your browser and reload/refresh the page.</h5>
+              <h5>Instructions: Please read the two-page information sheet below and complete the
+checkbox questions on the second page to consent to participate in this study.</h5>
+            </div>
+
+            <PDF showConsents={() => this.setState({ show: true })} />
             {/* <img style={{ width: "80%" }} src={process.env.PUBLIC_URL + "/pictures/icf1.png"} />
             <img style={{ width: "80%" }} src={process.env.PUBLIC_URL + "/pictures/icf2.png"} /> */}
           </div>
           <br />
-          <div id="consents">
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>Do you understand that you have been asked to be in a research study?</h5>
-              <Checkbox
-                checked={checked1}
-                color="primary"
-                onChange={() => this.handleChange(1)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <h5 style={{ marginTop: 9 }}>Yes</h5>
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>Have you read the information at the top of this page?</h5>
-              <Checkbox
-                checked={checked2}
-                color="primary"
-                onChange={() => this.handleChange(2)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <h5 style={{ marginTop: 9 }}>Yes</h5>
-              <a href="https://picspie.s3.ca-central-1.amazonaws.com/hearing+test/icf.pdf" target="_blank" style={{ marginTop: 7, marginLeft: 10 }}>
-                A copy of this information can be downloaded here
-            </a>
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>Do you understand the benefits and risks involved in taking part in this research study?</h5>
-              <Checkbox
-                checked={checked3}
-                color="primary"
-                onChange={() => this.handleChange(3)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <h5 style={{ marginTop: 9 }}>Yes</h5>
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>
-                Do you understand that you are free to withdraw from this study at any time without having to give a reason?
-            </h5>
-              <Checkbox
-                checked={checked4}
-                color="primary"
-                onChange={() => this.handleChange(4)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <h5 style={{ marginTop: 9 }}>Yes</h5>
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>Do you understand that your confidentiality and anonymity will be protected at all times?</h5>
-              <Checkbox
-                checked={checked5}
-                color="primary"
-                onChange={() => this.handleChange(5)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <h5 style={{ marginTop: 9 }}>Yes</h5>
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>Do you understand that are free to contact the researchers (jcbhlab@ualberta.ca) if you have any questions about this study?</h5>
-              <Checkbox
-                checked={checked6}
-                label="asdasdasda"
-                color="primary"
-                onChange={() => this.handleChange(6)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <h5 style={{ marginTop: 9 }}>Yes</h5>
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>If you wish to be contacted about future studies, please enter your email here:</h5>
-              <TextField style={{ marginTop: 3, marginLeft: 5, width: 200 }} onChange={(e) => this.setState({ email: e.target.value })} />
-            </div>
-            <div className="row" style={{ marginLeft: 20 }}>
-              <h5 style={{ marginTop: 10 }}>I agree to take part in this study:</h5>
-              <RadioGroup aria-label="gender" name="gender1" value={checked7} onChange={() => this.handleChange(7)}>
-                <div className="row" style={{ marginLeft: 10 }}>
-                  <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                  <FormControlLabel value={false} control={<Radio />} label="No" />
-                </div>
-              </RadioGroup>
-            </div>
-          </div>
-
           {
-            checked1 && checked2 && checked3 && checked4 && checked5 && checked6 && checked7 ?
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ margin: 20, width: 150, backgroundColor: "black" }}
-                onClick={() => this.props.handleClick(this.state.email)}
-              >
-                Next
-        </Button>
+            show ?
+              <div id="consents">
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>Do you understand that you have been asked to be in a research study?</h5>
+                  <Checkbox
+                    checked={checked1}
+                    color="primary"
+                    onChange={() => this.handleChange(1)}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                  <h5 style={{ marginTop: 9 }}>Yes</h5>
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>Have you read the information at the top of this page?</h5>
+                  <Checkbox
+                    checked={checked2}
+                    color="primary"
+                    onChange={() => this.handleChange(2)}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                  <h5 style={{ marginTop: 9 }}>Yes</h5>
+                  <a href="https://picspie.s3.ca-central-1.amazonaws.com/hearing+test/icf.pdf" target="_blank" style={{ marginTop: 7, marginLeft: 10 }}>
+                    A copy of this information can be downloaded here
+            </a>
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>Do you understand the benefits and risks involved in taking part in this research study?</h5>
+                  <Checkbox
+                    checked={checked3}
+                    color="primary"
+                    onChange={() => this.handleChange(3)}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                  <h5 style={{ marginTop: 9 }}>Yes</h5>
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>
+                    Do you understand that you are free to withdraw from this study at any time without having to give a reason?
+            </h5>
+                  <Checkbox
+                    checked={checked4}
+                    color="primary"
+                    onChange={() => this.handleChange(4)}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                  <h5 style={{ marginTop: 9 }}>Yes</h5>
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>Do you understand that your confidentiality and anonymity will be protected at all times?</h5>
+                  <Checkbox
+                    checked={checked5}
+                    color="primary"
+                    onChange={() => this.handleChange(5)}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                  <h5 style={{ marginTop: 9 }}>Yes</h5>
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>Do you understand that are free to contact the researchers (jcbhlab@ualberta.ca) if you have any questions about this study?</h5>
+                  <Checkbox
+                    checked={checked6}
+                    label="asdasdasda"
+                    color="primary"
+                    onChange={() => this.handleChange(6)}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                  <h5 style={{ marginTop: 9 }}>Yes</h5>
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>If you wish to be contacted about future studies, please enter your email here:</h5>
+                  <TextField style={{ marginTop: 3, marginLeft: 5, width: 200 }} onChange={(e) => this.setState({ email: e.target.value })} />
+                </div>
+                <div className="row" style={{ marginLeft: 20 }}>
+                  <h5 style={{ marginTop: 10 }}>I agree to take part in this study:</h5>
+                  <RadioGroup aria-label="gender" name="gender1" value={checked7} onChange={() => this.handleChange(7)}>
+                    <div className="row" style={{ marginLeft: 10 }}>
+                      <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                      <FormControlLabel value={false} control={<Radio />} label="No" />
+                    </div>
+                  </RadioGroup>
+                </div>
+                {
+                  checked1 && checked2 && checked3 && checked4 && checked5 && checked6 && checked7 ?
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ margin: 20, width: 150, backgroundColor: "black" }}
+                      onClick={() => this.props.handleClick(this.state.email)}
+                    >
+                      Next
+                    </Button>
+                    :
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ margin: 20, width: 150 }}
+                      disabled
+                    >
+                      Next
+                    </Button>
+                }
+              </div>
               :
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ margin: 20, width: 150 }}
-                disabled
-              >
-                Next
-        </Button>
+              null
           }
-
           <br /><br /><br /><br /><br /><br />
         </div>
       </Container>

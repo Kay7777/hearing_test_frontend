@@ -12,7 +12,8 @@ class DemoInfo extends React.Component {
       ID: null,
       age: null,
       gender: null,
-      province: null
+      province: null,
+      backupProvince: null
     };
   }
 
@@ -29,16 +30,28 @@ class DemoInfo extends React.Component {
   }
 
   renderButton = () => {
-    const { ID, age, gender, province } = this.state;
+    const { ID, age, gender, province, backupProvince } = this.state;
     if (age !== null && gender !== null && province !== null) {
-      return <Button
-        variant="contained"
-        color="primary"
-        style={{ margin: 20, width: 150, backgroundColor: "black" }}
-        onClick={() => this.props.handleClick(ID, age, gender, province)}
-      >
-        Next
+      if (backupProvince === null) {
+        return <Button
+          variant="contained"
+          color="primary"
+          style={{ margin: 20, width: 150, backgroundColor: "black" }}
+          onClick={() => this.props.handleClick(ID, age, gender, province)}
+        >
+          Next
     </Button>
+      } else {
+        return <Button
+          variant="contained"
+          color="primary"
+          style={{ margin: 20, width: 150, backgroundColor: "black" }}
+          onClick={() => this.props.handleClick(ID, age, gender, backupProvince)}
+        >
+          Next
+    </Button>
+      }
+
     } else {
       return <Button
         variant="contained"
@@ -52,7 +65,7 @@ class DemoInfo extends React.Component {
   }
 
   render() {
-    const { ID, age, gender, province } = this.state;
+    const { ID, age, gender, province, backupProvince } = this.state;
     return (
       <Container>
         <div
@@ -65,7 +78,8 @@ class DemoInfo extends React.Component {
           }}
         >
           <h3>Your participant ID is: {ID}</h3>
-          <h5>Please write this down to if you wish to withdraw your data after you have completed the experiment.</h5>
+          <h5>Please write this ID down. You may contact the investigators and use this number to
+withdraw your data after you have completed the experiment.</h5>
           <h5>Please answer the questions below using the provided dropdown boxes.</h5>
           <br />
           <FormControl>
@@ -222,8 +236,9 @@ class DemoInfo extends React.Component {
             {
               province === "Other" ?
                 <TextField
+                  value={backupProvince}
                   label="Location"
-                  onChange={(e) => this.setState({ province: e.target.value })}
+                  onChange={(e) => this.setState({ backupProvince: e.target.value })}
                   style={{ width: 300 }}
                 />
                 :
