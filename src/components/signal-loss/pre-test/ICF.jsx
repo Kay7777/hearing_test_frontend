@@ -63,7 +63,7 @@ checkbox questions on the second page to consent to participate in this study.</
             show ?
               <div id="consents">
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>Do you understand that you have been asked to be in a research study?</h5>
+                  <h5 style={{ marginTop: 10 }}>1. Do you understand that you have been asked to be in a research study?</h5>
                   <Checkbox
                     checked={checked1}
                     color="primary"
@@ -73,7 +73,7 @@ checkbox questions on the second page to consent to participate in this study.</
                   <h5 style={{ marginTop: 9 }}>Yes</h5>
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>Have you read the information at the top of this page?</h5>
+                  <h5 style={{ marginTop: 10 }}>2. Have you read the information at the top of this page?</h5>
                   <Checkbox
                     checked={checked2}
                     color="primary"
@@ -86,7 +86,7 @@ checkbox questions on the second page to consent to participate in this study.</
             </a>
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>Do you understand the benefits and risks involved in taking part in this research study?</h5>
+                  <h5 style={{ marginTop: 10 }}>3. Do you understand the benefits and risks involved in taking part in this research study?</h5>
                   <Checkbox
                     checked={checked3}
                     color="primary"
@@ -97,7 +97,7 @@ checkbox questions on the second page to consent to participate in this study.</
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
                   <h5 style={{ marginTop: 10 }}>
-                    Do you understand that you are free to withdraw from this study at any time without having to give a reason?
+                    4. Do you understand that you are free to withdraw from this study at any time without having to give a reason?
             </h5>
                   <Checkbox
                     checked={checked4}
@@ -108,7 +108,7 @@ checkbox questions on the second page to consent to participate in this study.</
                   <h5 style={{ marginTop: 9 }}>Yes</h5>
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>Do you understand that your confidentiality and anonymity will be protected at all times?</h5>
+                  <h5 style={{ marginTop: 10 }}>5. Do you understand that your confidentiality and anonymity will be protected at all times?</h5>
                   <Checkbox
                     checked={checked5}
                     color="primary"
@@ -118,7 +118,7 @@ checkbox questions on the second page to consent to participate in this study.</
                   <h5 style={{ marginTop: 9 }}>Yes</h5>
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>Do you understand that are free to contact the researchers (jcbhlab@ualberta.ca) if you have any questions about this study?</h5>
+                  <h5 style={{ marginTop: 10 }}>6. Do you understand that are free to contact the researchers (jcbhlab@ualberta.ca) if you have any questions about this study?</h5>
                   <Checkbox
                     checked={checked6}
                     label="asdasdasda"
@@ -129,11 +129,11 @@ checkbox questions on the second page to consent to participate in this study.</
                   <h5 style={{ marginTop: 9 }}>Yes</h5>
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>If you wish to be contacted about future studies, please enter your email here:</h5>
+                  <h5 style={{ marginTop: 10 }}>7. If you wish to be contacted about future studies, please enter your email here:</h5>
                   <TextField style={{ marginTop: 3, marginLeft: 5, width: 200 }} onChange={(e) => this.setState({ email: e.target.value })} />
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h5 style={{ marginTop: 10 }}>I agree to take part in this study:</h5>
+                  <h5 style={{ marginTop: 10 }}>8. I agree to take part in this study:</h5>
                   <RadioGroup aria-label="gender" name="gender1" value={checked7} onChange={() => this.handleChange(7)}>
                     <div className="row" style={{ marginLeft: 10 }}>
                       <FormControlLabel value={true} control={<Radio />} label="Yes" />

@@ -12,7 +12,7 @@ export default (props) => {
         }}
       >
         <h2>
-          Thank you for particapating this test!
+        Thank you for participating in this test!
         </h2>
         <Button variant="contained" color="primary" onClick={() => window.location = "/"} >Back to Main Page</Button>
       </div>

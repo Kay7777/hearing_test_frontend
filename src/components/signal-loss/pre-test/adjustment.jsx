@@ -83,6 +83,11 @@ class VolumeAdjustment extends React.Component {
           <Container>
             <h5>You can use either speakers or headphones to complete this experiment. Headphones will work best. </h5>
             <h5>Using the dropbox below, select what you will be using to complete this experiment.</h5>
+            {
+              output === "speakers" ?
+              <h5>(If using speakers, please keep a consistent distance from your computer during the entire
+                experiment)</h5> : null
+            }
             <div>
               <Select
                 labelId="demo-controlled-open-select-label"
@@ -91,8 +96,8 @@ class VolumeAdjustment extends React.Component {
                 onChange={this.handleChangeOutput}
                 style={{ width: 150 }}
               >
-                <MenuItem value="headphone">headphone</MenuItem>
-                <MenuItem value="speaker">speaker</MenuItem>
+                <MenuItem value="headphones">headphones</MenuItem>
+                <MenuItem value="speakers">speakers</MenuItem>
               </Select>
             </div>
             <br />
