@@ -108,6 +108,7 @@ class VolumeAdjustment extends React.Component {
               <h5>
                 Move the slider bar to your most comfortable listening level. Once comfortable, click NEXT to begin the study.
             </h5>
+            <h5>Please do not adjust your computer volume during the experiment. </h5>
             </div>
             <VolumeSlider
               handleVolume={this.handleVolume}
