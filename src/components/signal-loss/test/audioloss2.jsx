@@ -20,7 +20,7 @@ class TestMain extends React.Component {
             traversals: 0,
             lastCorrectness: null,
             pause: false,
-            num: 3
+            num: 25
         }
     }
 
