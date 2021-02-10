@@ -7,14 +7,91 @@ import { ExportReactCSV } from "../../components/partials/csv";
 class Data extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], login: false, username: "", password: "" };
+    this.state = { array: [], login: false, password: "", datas: [], headers: [] };
   }
 
   componentDidMount = async () => {
     const doc = await axios.get("/api/sentence/user/data");
     const array = [];
+    const datas = [];
+    const headers = ["ID", "block1", "SNR1", "block2", "SNR2", "block3", "SNR3", "block4", "SNR4", "Gender", "Province", "BirthYear", "Aids", "Output"];
+    
+    // wirte headers
     doc.data.map(data => {
-      const obj = {};
+      for (let i=1; i<=4; i++) {
+        let timer;
+        let dbs;
+        switch(i){
+            case 1:
+              timer = "timer1";
+                dbs = "dbs1";
+                break;
+            case 2:
+              timer = "timer2";
+                dbs = "dbs2";
+                break;
+            case 3:
+              timer = "timer3";
+                dbs = "dbs3";
+                break;
+            case 4:
+              timer = "timer4";
+                dbs = "dbs4";
+                break;
+            default:
+                break;
+        }
+        for (let j=1; j<=data[timer].length; j++) {
+            headers.push(`${timer}-t${j}`);
+            headers.push(`${dbs}-t${j}`);
+        }
+      }
+    });
+    // write datas
+    doc.data.map(data => {
+      const row = [
+        String(data["ID"]), 
+        String(data["order"][0]), String(data["SNR"][0]),
+        String(data["order"][1]), String(data["SNR"][1]),
+        String(data["order"][2]), String(data["SNR"][2]),
+        String(data["order"][3]), String(data["SNR"][3]),
+        String(data["gender"]), String(data["province"]),
+        String(data["age"]), String(data["aids"]),
+        String(data["output"])
+      ];
+      for (let i=1; i<=4; i++) {
+        let timer;
+        let dbs;
+        switch(i){
+            case 1:
+              timer = "timer1";
+                dbs = "dbs1";
+                break;
+            case 2:
+              timer = "timer2";
+                dbs = "dbs2";
+                break;
+            case 3:
+              timer = "timer3";
+                dbs = "dbs3";
+                break;
+            case 4:
+              timer = "timer4";
+                dbs = "dbs4";
+                break;
+            default:
+                break;
+        }
+        for (let j=0; j<data[timer].length; j++) {
+            row.push(data[timer][j]);
+            row.push(data[dbs][j+1]);
+        }
+      }
+        datas.push(row);
+    });
+    // write the array
+    const obj = {};
+    doc.data.map(data => {
       obj["ID"] = String(data["ID"]);
       obj["SNR"] = JSON.stringify(data["SNR"]);
       obj["gender"] = data["gender"];
@@ -44,8 +121,8 @@ class Data extends React.Component {
       obj["preQuestion"] = preQuestion;
       obj["postQuestion"] = postQuestion;
       array.push(obj);
-    })
-    this.setState({ array });
+    });
+    this.setState({ array, headers, datas });
   }
 
   deleteData = async (id) => {
@@ -54,7 +131,7 @@ class Data extends React.Component {
   }
 
   login = () => {
-    if (this.state.username === "admin@hearingtest.com" && this.state.password === "thisisthepassword") {
+    if (this.state.password === "thisisthepassword") {
       this.setState({ login: true });
     } else {
       window.alert("Wrong login information, retry please!");
@@ -62,7 +139,7 @@ class Data extends React.Component {
   }
 
   render() {
-    const { array, login, username, password } = this.state;
+    const { array, login, password, datas, headers } = this.state;
     return (
       login ?
         <Container>
@@ -73,7 +150,7 @@ class Data extends React.Component {
               <h4>Loading ... (or there is no data in the database)</h4>
               :
               <div>
-                <ExportReactCSV csvData={array} fileName={"HearingTestData"} />
+                <ExportReactCSV data={datas} headers={headers} fileName={"HearingTestData"} />
                 <br />
                 <Table data={array} />
                 <h5>
@@ -97,7 +174,6 @@ class Data extends React.Component {
         :
         <Container>
           <div style={{ position: "fixed", left: "30%", right: "30%", top: "20%" }}>
-            <TextField value={username} style={{ width: 300 }} onChange={(e) => this.setState({ username: e.target.value })} label="Username" /><br />
             <TextField value={password} style={{ width: 300 }} onChange={(e) => this.setState({ password: e.target.value })} label="password" type="password" /><br /><br />
             <Button variant="contained" color="primary" onClick={this.login} >Log In</Button>
           </div>

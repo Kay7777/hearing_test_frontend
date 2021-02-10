@@ -112,10 +112,10 @@ class TestMain extends React.Component {
                         <Container>
                             <div style={{ marginTop: "20%", marginLeft: "10%", marginRight: "10%" }}>
                                 <h4>
-                                    The following is an example of what you will experience during the experiment.
-                                    Listen for the call sign or name Baron. For example, “Ready Baron, go to red three.” Use your mouse and choose the red number 3 on
-                                    the computer screen. Please give this example a few minutes to load. A NEXT button will
-                                    appear when the trial is ready to start.
+                                    The following is an example of what you will experience during the experiment. 
+                                    Listen for the call sign or name Baron. For example, “Ready Baron, go to red three now.” 
+                                    Use your mouse and choose the red number 3 on the computer screen. 
+                                    Please give this example a few minutes to load. A NEXT button will appear when the trial is ready to start.
                                 </h4>
                                 <br />
                                 {
@@ -141,8 +141,15 @@ class TestMain extends React.Component {
                         stage === "done" ?
                             <Container>
                                 <div style={{ marginTop: "20%", marginLeft: "10%", marginRight: "10%" }}>
-                                    <h4>You are now ready to start the experiment. Your call sign will always be Baron. Follow the instructions as quickly and accurately as possible. If you aren’t sure, make a guess! Press NEXT when you are ready to start.</h4><br />
-                                    <h4>You will complete four blocks in this experiment. Each block takes approximately six minutes. The pause button is available between audio presentations and will pause the experiment. Click on it again to resume the experiment.</h4>
+                                    <h4>
+                                        You are now ready to start the experiment. 
+                                        You are always listening for the call sign Baron. 
+                                        If you heard the correct "Baron" number and colour, 
+                                        choose the answer as quickly and accurately as possible. 
+                                        For example if you hear "Ready Baron, go to Blue 2 now", 
+                                        you should click on the blue 2. If you aren’t sure, make a guess! 
+                                        Press NEXT when you are ready to start.
+                                    </h4>
                                     <Button
                                         variant="contained"
                                         color="primary"

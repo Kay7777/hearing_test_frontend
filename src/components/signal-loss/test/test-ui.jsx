@@ -22,25 +22,6 @@ class TestMain extends React.Component {
         }
     }
 
-    // componentDidMount = async () => {
-    //     for (var i = 0; i < 4; i++) {
-    //         for (var j = 1; j < 9; j++) {
-    //             const audio1 = new Audio(process.env.PUBLIC_URL + "/loss-audios/0" + i.toString() + j.toString() + ".wav");
-    //             audio1.volume = 0;
-    //             try {
-    //                 await audio1.play();
-    //                 audio1.pause();
-    //             } catch (e) { console.log(e, "for", i, j) }
-    //         }
-    //     }
-    //     const audio = this.state.noise;
-    //     audio.volume = 0;
-    //     await audio.play();
-    //     audio.pause();
-    //     this.setState({ loading: false }, () => console.log(this.state));
-    //     this.playAudio();
-    // }
-
     startTimer = () => {
         this.setState({ time: new Date().getTime() });
     };
