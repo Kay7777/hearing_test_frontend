@@ -30,8 +30,8 @@ export default function MyApp(props) {
   return (
     <div id="pdf" >
       <Document
-        file="https://literacy-train.s3.ca-central-1.amazonaws.com/others/icf.pdf"
-        // file={process.env.PUBLIC_URL + "/docs/icf.pdf"}
+        // file="https://literacy-train.s3.ca-central-1.amazonaws.com/others/icf.pdf"
+        file={process.env.PUBLIC_URL + "/docs/icf.pdf"}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page width={window.innerWidth*0.9} pageNumber={pageNumber} />
