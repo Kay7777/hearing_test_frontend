@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
   table: {
@@ -41,6 +42,7 @@ export default function SimpleTable(props) {
             <TableCell align="left">Timer 4</TableCell>
             <TableCell align="left">Pre-questions</TableCell>
             <TableCell align="left">Post-questions</TableCell>
+            <TableCell align="left">Operation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -67,6 +69,7 @@ export default function SimpleTable(props) {
                   <TableCell align="left">{JSON.parse(data.timer4).map(time => time + "/")}</TableCell>
                   <TableCell align="left">{Object.keys(data.preQuestion).map(key => data.preQuestion[key] + "/")}</TableCell>
                   <TableCell align="left">{Object.keys(data.postQuestion).map(key => data.postQuestion[key] + "/")}</TableCell>
+                  <TableCell align="left"><Button color="secondary" onClick={() => props.deleteData(data._id)}>Delete</Button></TableCell>
                 </TableRow>
               )
             })

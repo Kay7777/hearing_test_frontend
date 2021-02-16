@@ -81,7 +81,7 @@ checkbox questions on the second page to consent to participate in this study.</
                     inputProps={{ 'aria-label': 'primary checkbox' }}
                   />
                   <h5 style={{ marginTop: 9 }}>Yes</h5>
-                  <a href="https://picspie.s3.ca-central-1.amazonaws.com/hearing+test/icf.pdf" target="_blank" style={{ marginTop: 7, marginLeft: 10 }}>
+                  <a href="https://literacy-train.s3.ca-central-1.amazonaws.com/others/icf.pdf" target="_blank" style={{ marginTop: 7, marginLeft: 10 }}>
                     A copy of this information can be downloaded here
             </a>
                 </div>

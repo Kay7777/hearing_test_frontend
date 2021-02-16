@@ -14,13 +14,13 @@ class TestMain extends React.Component {
             dbs: [0],
             time: 0,
             timer: [],
+            correct: [],
             userStart: false,
             alert: false,
             once: false,
             traversals: 0,
             lastCorrectness: null,
-            pause: false,
-            num: 25
+            pause: false
         }
     }
 
@@ -75,16 +75,17 @@ class TestMain extends React.Component {
     }
 
     handleClick = async (num) => {
-        const { questions, index, timer, lastCorrectness, traversals } = this.state;
+        const { questions, index, timer, lastCorrectness, traversals, correct } = this.state;
         await this.setState({ userStart: false });
         await this.stopTimer();
         console.log(this.state.time);
         await timer.push(this.state.time);
         await this.resetTimer();
         await this.setState({ timer });
-        const correct = questions[index] === num;
+        const right = questions[index] === num;
         let sourceVolume;
-        if (correct) {
+        if (right) {
+            correct.push(true);
             if (lastCorrectness === null) {
                 this.setState({ lastCorrectness: true })
             } else if (lastCorrectness === false) {
@@ -93,6 +94,7 @@ class TestMain extends React.Component {
             }
             sourceVolume = this.goHarder();
         } else {
+            correct.push(false);
             if (lastCorrectness === null) {
                 this.setState({ lastCorrectness: false })
             } else if (lastCorrectness === true) {
@@ -101,8 +103,8 @@ class TestMain extends React.Component {
             }
             sourceVolume = this.goEasier();
         }
-        await this.setState({ index: index + 1, sourceVolume });
-        if (this.state.traversals >= this.state.num) {
+        await this.setState({ index: index + 1, sourceVolume, correct });
+        if (this.state.traversals >= this.props.reversals) {
             const { dbs } = this.state;
             let sum = 0;
             if (dbs.length >= 10) {
@@ -116,7 +118,7 @@ class TestMain extends React.Component {
             }
             const SNR = Number(sum / 10).toFixed(2);
             console.log("SNR is " + SNR);
-            this.props.handleClick(SNR, timer, dbs);
+            this.props.handleClick(SNR, timer, dbs, correct);
         } else {
             setTimeout(() => {
                 this.playAudio();
@@ -163,6 +165,8 @@ class TestMain extends React.Component {
 
     render() {
         const { traversals, loading, userStart, pause } = this.state;
+        const { reversals } = this.props;
+        
         return (
             <div>
                 {
@@ -217,31 +221,31 @@ class TestMain extends React.Component {
                             </div>
                             <div id="progress" className="row" style={{ position: "fixed", left: "5%", right: "5%", bottom: 10 }}>
                                 <h5>Progress⠀</h5>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 0 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 1 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 2 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 3 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 4 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 5 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 6 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 7 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 8 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 9 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 10 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 11 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 12 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 13 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 14 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 15 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 16 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 17 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 18 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 19 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 20 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 21 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 22 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 23 ? "blue" : "black" }}>⠀</Avatar>
-                                <Avatar style={{ width: 20, height: 20, backgroundColor: traversals >= 24 ? "blue" : "black" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 0 ? traversals >= 0 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 1 ? traversals >= 1 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 2 ? traversals >= 2 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 3 ? traversals >= 3 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 4 ? traversals >= 4 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 5 ? traversals >= 5 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 6 ? traversals >= 6 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 7 ? traversals >= 7 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 8 ? traversals >= 8 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 9 ? traversals >= 9 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 10 ? traversals >= 10 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 11 ? traversals >= 11 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 12 ? traversals >= 12 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 13 ? traversals >= 13 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 14 ? traversals >= 14 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 15 ? traversals >= 15 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 16 ? traversals >= 16 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 17 ? traversals >= 17 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 18 ? traversals >= 18 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 19 ? traversals >= 19 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 20 ? traversals >= 20 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 21 ? traversals >= 21 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 22 ? traversals >= 22 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 23 ? traversals >= 23 ? "blue" : "black" : "white" }}>⠀</Avatar>
+                                <Avatar style={{ width: 20, height: 20, backgroundColor: reversals > 24 ? traversals >= 24 ? "blue" : "black" : "white" }}>⠀</Avatar>
                                 <h5> {this.props.block + 1}/4 Block</h5>
                                 {
                                     userStart ?

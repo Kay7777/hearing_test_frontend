@@ -7,54 +7,61 @@ import { ExportReactCSV } from "../../components/partials/csv";
 class Data extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], login: false, password: "", datas: [], headers: [] };
+    this.state = { newReversals: null, reversals: null, array: [], login: false, password: "", datas: [], headers: [] };
   }
 
   componentDidMount = async () => {
     const doc = await axios.get("/api/sentence/user/data");
+    const setting = await axios.get("/api/crm1/reversals");
     const array = [];
     const datas = [];
-    const headers = ["ID", "block1", "SNR1", "block2", "SNR2", "block3", "SNR3", "block4", "SNR4", "Gender", "Province", "BirthYear", "Aids", "Output"];
+    const headers = ["ID", "Reversals", "block1", "trials1", "SNR1", "block2", "trials2", "SNR2", "block3", "trials3", "SNR3", "block4", "trials4", "SNR4", "Gender", "Province", "BirthYear", "Aids", "Output"];
     
     // wirte headers
     doc.data.map(data => {
       for (let i=1; i<=4; i++) {
         let timer;
         let dbs;
+        let correct;
         switch(i){
             case 1:
               timer = "timer1";
-                dbs = "dbs1";
-                break;
+              dbs = "dbs1";
+              correct = "correct1";
+              break;
             case 2:
               timer = "timer2";
-                dbs = "dbs2";
-                break;
+              dbs = "dbs2";
+              correct = "correct2";
+              break;
             case 3:
               timer = "timer3";
-                dbs = "dbs3";
-                break;
+              dbs = "dbs3";
+              correct = "correct3";
+              break;
             case 4:
               timer = "timer4";
-                dbs = "dbs4";
-                break;
+              dbs = "dbs4";
+              correct = "correct4";
+              break;
             default:
-                break;
+              break;
         }
         for (let j=1; j<=data[timer].length; j++) {
             headers.push(`${timer}-t${j}`);
             headers.push(`${dbs}-t${j}`);
+            headers.push(`${correct}-t${j}`);
         }
       }
     });
     // write datas
     doc.data.map(data => {
       const row = [
-        String(data["ID"]), 
-        String(data["order"][0]), String(data["SNR"][0]),
-        String(data["order"][1]), String(data["SNR"][1]),
-        String(data["order"][2]), String(data["SNR"][2]),
-        String(data["order"][3]), String(data["SNR"][3]),
+        String(data["ID"]), String(data["reversals"]), 
+        String(data["order"][0]), String(data["trials1"]), String(data["SNR"][0]),
+        String(data["order"][1]), String(data["trials2"]), String(data["SNR"][1]),
+        String(data["order"][2]), String(data["trials3"]), String(data["SNR"][2]),
+        String(data["order"][3]), String(data["trials4"]), String(data["SNR"][3]),
         String(data["gender"]), String(data["province"]),
         String(data["age"]), String(data["aids"]),
         String(data["output"])
@@ -62,36 +69,43 @@ class Data extends React.Component {
       for (let i=1; i<=4; i++) {
         let timer;
         let dbs;
+        let correct;
         switch(i){
-            case 1:
-              timer = "timer1";
-                dbs = "dbs1";
-                break;
-            case 2:
-              timer = "timer2";
-                dbs = "dbs2";
-                break;
-            case 3:
-              timer = "timer3";
-                dbs = "dbs3";
-                break;
-            case 4:
-              timer = "timer4";
-                dbs = "dbs4";
-                break;
-            default:
-                break;
+          case 1:
+            timer = "timer1";
+            dbs = "dbs1";
+            correct = "correct1";
+            break;
+          case 2:
+            timer = "timer2";
+            dbs = "dbs2";
+            correct = "correct2";
+            break;
+          case 3:
+            timer = "timer3";
+            dbs = "dbs3";
+            correct = "correct3";
+            break;
+          case 4:
+            timer = "timer4";
+            dbs = "dbs4";
+            correct = "correct4";
+            break;
+          default:
+            break;
         }
         for (let j=0; j<data[timer].length; j++) {
             row.push(data[timer][j]);
             row.push(data[dbs][j+1]);
+            row.push(JSON.stringify(data[correct][j]));
         }
       }
         datas.push(row);
     });
     // write the array
-    const obj = {};
     doc.data.map(data => {
+      const obj = {};
+      obj["_id"] = data._id;
       obj["ID"] = String(data["ID"]);
       obj["SNR"] = JSON.stringify(data["SNR"]);
       obj["gender"] = data["gender"];
@@ -122,7 +136,7 @@ class Data extends React.Component {
       obj["postQuestion"] = postQuestion;
       array.push(obj);
     });
-    this.setState({ array, headers, datas });
+    this.setState({ array, headers, datas, reversals: setting.data.reversals });
   }
 
   deleteData = async (id) => {
@@ -134,12 +148,18 @@ class Data extends React.Component {
     if (this.state.password === "thisisthepassword") {
       this.setState({ login: true });
     } else {
+      this.setState({password: ""});
       window.alert("Wrong login information, retry please!");
     }
   }
 
+  updateReversals = async () => {
+    await axios.put("/api/crm1/reversals", {reversals: this.state.newReversals});
+    this.componentDidMount();
+  }
+
   render() {
-    const { array, login, password, datas, headers } = this.state;
+    const { array, login, password, datas, headers, reversals, newReversals } = this.state;
     return (
       login ?
         <Container>
@@ -150,24 +170,36 @@ class Data extends React.Component {
               <h4>Loading ... (or there is no data in the database)</h4>
               :
               <div>
+                <hr />
                 <ExportReactCSV data={datas} headers={headers} fileName={"HearingTestData"} />
+                <hr />
+                <Table data={array} deleteData={this.deleteData} />
+                <div id="questions">
+                  <h5>
+                    Notes:
+                  </h5>
+                  <h6>
+                    Pre-questions:
+                  </h6>
+                  <h6>1. I think my hearing in general is</h6>
+                  <h6>2. I think my hearing in quiet is</h6>
+                  <h6>3. I think my hearing in background noise is</h6>
+                  <h6>
+                    Post-questions:
+                  </h6>
+                  <h6>1. How difficult did you find this experiment? Please make a mark on the line below.</h6>
+                  <h6>2. How much effort did it take for you to complete this experiment? Please make a mark on the line below.</h6>
+                </div>
+                <hr />
+                <div id="reversals">
+                  <h4>Current Reversals: {reversals}</h4>
+                  <TextField label="new reversals" value={newReversals} type="number" onChange={(e) => this.setState({newReversals: Number(e.target.value)})} />
+                  <Button color="primary" variant="contained" onClick={this.updateReversals} >Update</Button>
+                </div>
+                <hr />
                 <br />
-                <Table data={array} />
-                <h5>
-                  Notes:
-                </h5>
-                <h6>
-                  Pre-questions:
-                </h6>
-                <h6>1. I think my hearing in general is</h6>
-                <h6>2. I think my hearing in quiet is</h6>
-                <h6>3. I think my hearing in background noise is</h6>
-                <h6>
-                  Post-questions:
-                </h6>
-                <h6>1. How difficult did you find this experiment? Please make a mark on the line below.</h6>
-                <h6>2. How much effort did it take for you to complete this experiment? Please make a mark on the line below.</h6>
               </div>
+
 
           }
         </Container>

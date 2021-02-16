@@ -12,14 +12,26 @@ export default function MyApp(props) {
 
   const handleNext = () => {
     setPageNumber(pageNumber + 1);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
     props.showConsents();
+  }
+
+  const handlePrev = () => {
+    setPageNumber(pageNumber - 1);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
 
   return (
     <div id="pdf" >
       <Document
-        // file="https://literacy-train.s3.ca-central-1.amazonaws.com/others/icf.pdf"
-        file={process.env.PUBLIC_URL + "/docs/icf.pdf"}
+        file="https://literacy-train.s3.ca-central-1.amazonaws.com/others/icf.pdf"
+        // file={process.env.PUBLIC_URL + "/docs/icf.pdf"}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page width={window.innerWidth*0.9} pageNumber={pageNumber} />
@@ -29,7 +41,7 @@ export default function MyApp(props) {
       <div style={{ textAlign: "center" }}>
         {
           pageNumber > 1 ?
-            <Button variant="contained" onClick={() => { setPageNumber(pageNumber - 1) }} >Previous</Button>
+            <Button variant="contained" onClick={handlePrev}>Previous</Button>
             :
             null
         }

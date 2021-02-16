@@ -31,13 +31,18 @@ class Main extends React.Component {
       dbs2: [],
       dbs3: [],
       dbs4: [],
+      correct1: [],
+      correct2: [],
+      correct3: [],
+      correct4: [],
       questions: {},
       aids: null,
       order: [],
       age: null,
       gender: null,
       province: null,
-      output: null
+      output: null,
+      reversals: null
     };
   }
   shuffle = (array) => {
@@ -52,7 +57,9 @@ class Main extends React.Component {
     return array;
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const doc = await axios.get("/api/crm1/reversals");
+    await this.setState({reversals: doc.data.reversals});
     const order = ["AudioLoss1", "AudioLoss2", "Source1", "Source2"];
     this.shuffle(order);
     this.setState({ order });
@@ -80,9 +87,13 @@ class Main extends React.Component {
 
   handlePostQuestions = async (postQuestion) => {
     // save data into database
-    const { output, email, ID, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, order, age, gender, province } = this.state;
+    const { output, email, ID, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, order, age, gender, province, correct1, correct2, correct3, correct4, reversals } = this.state;
+    const trial1 = correct1.length;
+    const trial2 = correct2.length;
+    const trial3 = correct3.length;
+    const trial4 = correct4.length;
     await axios.post("/api/sentence/user/data", {
-      output, email, ID, order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, preQuestion: questions, postQuestion, aids, SNR: this.state.SNR, age, gender, province
+      output, email, ID, order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, preQuestion: questions, postQuestion, aids, SNR: this.state.SNR, age, gender, province, correct1, correct2, correct3, correct4, reversals, trial1, trial2, trial3, trial4
     });
     this.setState({ process: "end" });
   }
@@ -91,25 +102,25 @@ class Main extends React.Component {
     this.setState({ process: "CRM1" });
   }
 
-  handleCRM1Click = (SNR, timer, dbs) => {
+  handleCRM1Click = (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer1: timer, dbs1: dbs, process: "midpage1" })
+    this.setState({ SNR: newSNR, timer1: timer, dbs1: dbs, correct1: correct, process: "midpage1" })
   }
-  handleCRM2Click = (SNR, timer, dbs) => {
+  handleCRM2Click = (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer2: timer, dbs2: dbs, process: "midpage2" })
+    this.setState({ SNR: newSNR, timer2: timer, dbs2: dbs, correct1: correct, process: "midpage2" })
   }
-  handleCRM3Click = (SNR, timer, dbs) => {
+  handleCRM3Click = (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer3: timer, dbs3: dbs, process: "midpage3" })
+    this.setState({ SNR: newSNR, timer3: timer, dbs3: dbs, correct1: correct, process: "midpage3" })
   }
-  handleCRM4Click = async (SNR, timer, dbs) => {
+  handleCRM4Click = async (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer4: timer, dbs4: dbs, process: "postquestion" })
+    this.setState({ SNR: newSNR, timer4: timer, dbs4: dbs, correct1: correct, process: "postquestion" })
   }
 
   handleMidPage1Click = () => {
@@ -125,15 +136,15 @@ class Main extends React.Component {
   }
 
   returnTrainingMode = (num, func) => {
-    const { order, volume } = this.state;
+    const { order, volume, reversals } = this.state;
     if (order[num] === "AudioLoss1") {
-      return <AudioLoss1 volume={volume} handleClick={func} cycle={"AudioLoss"} block={num} />;
+      return <AudioLoss1 reversals={reversals} volume={volume} handleClick={func} cycle={"AudioLoss"} block={num} />;
     } else if (order[num] === "AudioLoss2") {
-      return <AudioLoss2 volume={volume} handleClick={func} cycle={"AudioLoss"} block={num} />;
+      return <AudioLoss2 reversals={reversals} volume={volume} handleClick={func} cycle={"AudioLoss"} block={num} />;
     } else if (order[num] === "Source1") {
-      return <Source1 volume={volume} handleClick={func} cycle={"Source"} block={num} />;
+      return <Source1 reversals={reversals} volume={volume} handleClick={func} cycle={"Source"} block={num} />;
     } else if (order[num] === "Source2") {
-      return <Source2 volume={volume} handleClick={func} cycle={"Source"} block={num} />;
+      return <Source2 reversals={reversals} volume={volume} handleClick={func} cycle={"Source"} block={num} />;
     }
   }
 
