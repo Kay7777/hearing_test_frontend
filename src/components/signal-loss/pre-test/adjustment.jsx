@@ -9,8 +9,9 @@ class VolumeAdjustment extends React.Component {
       volumeAdjuest: false,
       audio: new Audio(process.env.PUBLIC_URL + "/audios/adjust.wav"),
       audioPlay: false,
-      audioVolume: 0.1,
-      output: null
+      audioVolume: 0,
+      output: null,
+      aids: null,
     };
   }
   componentDidMount = () => {
@@ -43,16 +44,20 @@ class VolumeAdjustment extends React.Component {
     this.setState({ output: e.target.value });
   }
 
+  handleAidsChange = (e) => {
+    this.setState({ aids: e.target.value });
+  }
+
   renderButton = () => {
-    const { output, audioVolume } = this.state;
-    if (output !== null) {
+    const { output, aids, audioVolume } = this.state;
+    if (!!output && aids != null && !!audioVolume) {
       return <Button
         variant="contained"
         color="primary"
         style={{ margin: 20, width: 150, backgroundColor: "black" }}
         onClick={() => {
           this.state.audio.pause();
-          this.props.handleClick(output, audioVolume)
+          this.props.handleClick(output, aids, audioVolume)
         }}
       >
         Next
@@ -70,25 +75,25 @@ class VolumeAdjustment extends React.Component {
   }
 
   render() {
-    const { audioPlay, output } = this.state;
+    const { audioPlay, output, aids } = this.state;
     return (
       <Container>
         <div
           style={{
-            textAlign: "center",
+            textAlign: "left",
             position: "relative",
-            marginTop: "20%",
+            marginTop: "10%",
           }}
         >
           <Container>
-            <h5>You can use either speakers or headphones to complete this experiment. Headphones will work best. </h5>
-            <h5>Using the dropbox below, select what you will be using to complete this experiment.</h5>
-            {
-              output === "speakers" ?
-              <h5>(If using speakers, please keep a consistent distance from your computer during the entire
-                experiment)</h5> : null
-            }
-            <div>
+            <div id="source">
+              <h5>You can use either speakers or headphones to complete this experiment. Headphones will work best. </h5>
+              <h5>Using the dropbox below, select what you will be using to complete this experiment.</h5>
+              {
+                output === "speakers" ?
+                <h5>(If using speakers, please keep a consistent distance from your computer during the entire
+                  experiment)</h5> : null
+              }
               <Select
                 labelId="demo-controlled-open-select-label"
                 id="demo-controlled-open-select"
@@ -98,6 +103,20 @@ class VolumeAdjustment extends React.Component {
               >
                 <MenuItem value="headphones">headphones</MenuItem>
                 <MenuItem value="speakers">speakers</MenuItem>
+              </Select>
+            </div>
+            <br />
+            <div id="aids">
+              <h5>Will you be wearing amplification (e.g., hearing aid(s), cochlear implant(s), bone anchored hearing aid(s), etc.) when you complete this experiment?</h5>
+              <Select
+                labelId="demo-controlled-open-select-label"
+                id="demo-controlled-open-select"
+                value={aids}
+                onChange={this.handleAidsChange}
+                style={{ width: 150 }}
+              >
+                <MenuItem value={true}>Yes</MenuItem>
+                <MenuItem value={false}>No</MenuItem>
               </Select>
             </div>
             <br />
@@ -112,7 +131,7 @@ class VolumeAdjustment extends React.Component {
             </div>
             <VolumeSlider
               handleVolume={this.handleVolume}
-              style={{ marginLeft: "30%" }}
+              style={{ marginLeft: 5 }}
             />
           </Container>
           <br />

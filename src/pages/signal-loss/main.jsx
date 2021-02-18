@@ -36,7 +36,8 @@ class Main extends React.Component {
       correct3: [],
       correct4: [],
       questions: {},
-      aids: null,
+      didWearAids: null,
+      willWearAids: null,
       order: [],
       age: null,
       gender: null,
@@ -76,24 +77,24 @@ class Main extends React.Component {
     this.setState({ process: "questions", age, gender, province, ID });
   }
 
-  handleAdjustClick = (output, volume) => {
-    console.log("The final volume", volume);
-    this.setState({ output, volume, process: "test" });
+  handlePreQuestions = (questions, aids) => {
+    this.setState({ questions, didWearAids: aids, process: "adjust" });
   }
 
-  handlePreQuestions = (questions, aids) => {
-    this.setState({ questions, aids, process: "adjust" });
+  handleAdjustClick = (output, aids, volume) => {
+    console.log("The final volume", volume);
+    this.setState({ output, volume, process: "test", willWearAids: aids });
   }
 
   handlePostQuestions = async (postQuestion) => {
     // save data into database
-    const { output, email, ID, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, aids, order, age, gender, province, correct1, correct2, correct3, correct4, reversals } = this.state;
-    const trial1 = correct1.length;
-    const trial2 = correct2.length;
-    const trial3 = correct3.length;
-    const trial4 = correct4.length;
+    const { output, email, ID, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, questions, didWearAids, willWearAids, order, age, gender, province, correct1, correct2, correct3, correct4, reversals } = this.state;
+    const trials1 = timer1.length;
+    const trials2 = timer2.length;
+    const trials3 = timer3.length;
+    const trials4 = timer4.length;
     await axios.post("/api/sentence/user/data", {
-      output, email, ID, order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, preQuestion: questions, postQuestion, aids, SNR: this.state.SNR, age, gender, province, correct1, correct2, correct3, correct4, reversals, trial1, trial2, trial3, trial4
+      output, email, ID, order, timer1, timer2, timer3, timer4, dbs1, dbs2, dbs3, dbs4, preQuestion: questions, postQuestion, didWearAids, willWearAids, SNR: this.state.SNR, age, gender, province, correct1, correct2, correct3, correct4, reversals, trials1, trials2, trials3, trials4
     });
     this.setState({ process: "end" });
   }
@@ -110,17 +111,17 @@ class Main extends React.Component {
   handleCRM2Click = (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer2: timer, dbs2: dbs, correct1: correct, process: "midpage2" })
+    this.setState({ SNR: newSNR, timer2: timer, dbs2: dbs, correct2: correct, process: "midpage2" })
   }
   handleCRM3Click = (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer3: timer, dbs3: dbs, correct1: correct, process: "midpage3" })
+    this.setState({ SNR: newSNR, timer3: timer, dbs3: dbs, correct3: correct, process: "midpage3" })
   }
   handleCRM4Click = async (SNR, timer, dbs, correct) => {
     const newSNR = this.state.SNR;
     newSNR.push(SNR);
-    this.setState({ SNR: newSNR, timer4: timer, dbs4: dbs, correct1: correct, process: "postquestion" })
+    this.setState({ SNR: newSNR, timer4: timer, dbs4: dbs, correct4: correct, process: "postquestion" })
   }
 
   handleMidPage1Click = () => {

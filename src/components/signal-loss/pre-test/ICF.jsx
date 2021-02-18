@@ -136,7 +136,7 @@ checkbox questions on the second page to consent to participate in this study.</
                   <h5 style={{ marginTop: 10 }}>8. I agree to take part in this study:</h5>
                   <RadioGroup aria-label="gender" name="gender1" value={checked7} onChange={() => this.handleChange(7)}>
                     <div className="row" style={{ marginLeft: 10 }}>
-                      <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                      <FormControlLabel value={true} control={<Radio color="primary"/>} label="Yes" />
                       <FormControlLabel value={false} control={<Radio />} label="No" />
                     </div>
                   </RadioGroup>

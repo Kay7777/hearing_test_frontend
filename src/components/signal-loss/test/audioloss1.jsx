@@ -255,6 +255,7 @@ class TestMain extends React.Component {
                                         :
                                         <Button style={{ marginLeft: 10 }} disabled variant="outlined" >Pause</Button>
                                 }
+                                <p>The blue dots on the progress bar may not advance with each trial. This is normal. Please do not adjust your computer volume during the test.</p>
                             </div>
                         </div>
                 }
