@@ -28,7 +28,7 @@ class TestMain extends React.Component {
         let num = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 1; j < 9; j++) {
-                const audio3 = new Audio(process.env.PUBLIC_URL + "/source-audios/0" + i.toString() + j.toString() + ".wav");
+                const audio3 = new Audio(process.env.PUBLIC_URL + "/source-audios/" + i.toString() + j.toString() + ".wav");
                 audio3.volume = 0;
                 try {
                     num += 1;
@@ -65,7 +65,7 @@ class TestMain extends React.Component {
         const { questions, maskVolume, sourceVolume } = this.state;
         const color = Math.floor(Math.random() * 4).toString();
         const number = Math.ceil(Math.random() * 8).toString();
-        const question = "0" + color + number
+        const question = color + number
         questions.push(question);
         this.setState({ questions });
         let sourceAudio = new Audio(process.env.PUBLIC_URL + "/source-audios/" + question + ".wav");

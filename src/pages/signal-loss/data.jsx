@@ -15,7 +15,12 @@ class Data extends React.Component {
     const setting = await axios.get("/api/crm1/reversals");
     const array = [];
     const datas = [];
-    const headers = ["ID", "Reversals", "block1", "trials1", "SNR1", "block2", "trials2", "SNR2", "block3", "trials3", "SNR3", "block4", "trials4", "SNR4", "Gender", "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output"];
+    const headers = [
+      "ID", "Email", "Reversals", "block1", "trials1", "SNR1", "block2", "trials2", 
+      "SNR2", "block3", "trials3", "SNR3", "block4", "trials4", "SNR4", "Gender", 
+      "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output", 
+      "preQuestion1", "preQuestion2", "preQuestion3", "postQuestion1", "postQuestion2"
+    ];
     
     // wirte headers
     // find the largest trials in each block
@@ -49,13 +54,15 @@ class Data extends React.Component {
       for (let j=1; j<=trials; j++) {
         headers.push(`timer${i}-t${j}`);
         headers.push(`dbs${i}-t${j}`);
+        headers.push(`question${i}-t${j}`);
+        headers.push(`answer${i}-t${j}`);
         headers.push(`correct${i}-t${j}`);
       }
     };
     // write datas
     doc.data.map(data => {
       const row = [
-        String(data["ID"]), String(data["reversals"]), 
+        String(data["ID"]), String(data["email"]), String(data["reversals"]), 
         String(data["order"][0]), String(data["trials1"]), String(data["SNR"][0]),
         String(data["order"][1]), String(data["trials2"]), String(data["SNR"][1]),
         String(data["order"][2]), String(data["trials3"]), String(data["SNR"][2]),
@@ -64,33 +71,51 @@ class Data extends React.Component {
         String(data["age"]), String(data["didWearAids"]), String(data["willWearAids"]),
         String(data["output"])
       ];
+      // add pre and post questions
+      Object.keys(data["preQuestion"]).map(key => {
+        row.push(data["preQuestion"][key]);
+      });
+      Object.keys(data["postQuestion"]).map(key => {
+        row.push(data["postQuestion"][key]);
+      });
+      // add correct, questions, answers, etc.
       for (let i=1; i<=4; i++) {
         let timer;
         let dbs;
+        let questions;
+        let answers;
         let correct;
         let trials;
         switch(i){
           case 1:
             timer = "timer1";
             dbs = "dbs1";
+            questions = "questions1";
+            answers = "answers1";
             correct = "correct1";
             trials = trials1;
             break;
           case 2:
             timer = "timer2";
             dbs = "dbs2";
+            questions = "questions2";
+            answers = "answers2";
             correct = "correct2";
             trials = trials2;
             break;
           case 3:
             timer = "timer3";
             dbs = "dbs3";
+            questions = "questions3";
+            answers = "answers3";
             correct = "correct3";
             trials = trials3;
             break;
           case 4:
             timer = "timer4";
             dbs = "dbs4";
+            questions = "questions4";
+            answers = "answers4";
             correct = "correct4";
             trials = trials4;
             break;
@@ -100,6 +125,8 @@ class Data extends React.Component {
         for (let j=0; j<trials; j++) {
             row.push(data[timer][j]);
             row.push(data[dbs][j+1]);
+            row.push(data[questions][j]);
+            row.push(data[answers][j]);
             row.push(JSON.stringify(data[correct][j]));
         }
       }
@@ -110,34 +137,6 @@ class Data extends React.Component {
       const obj = {};
       obj["_id"] = data._id;
       obj["ID"] = String(data["ID"]);
-      obj["SNR"] = JSON.stringify(data["SNR"]);
-      obj["gender"] = data["gender"];
-      obj["province"] = data["province"];
-      obj["birth"] = data["age"];
-      obj["didWearAids"] = String(data["didWearAids"]);
-      obj["willWearAids"] = String(data["willWearAids"]);
-      obj["order"] = data["order"];
-      obj["output"] = data["output"];
-      obj["timer1"] = JSON.stringify(data["timer1"]);
-      obj["timer2"] = JSON.stringify(data["timer2"]);
-      obj["timer3"] = JSON.stringify(data["timer3"]);
-      obj["timer4"] = JSON.stringify(data["timer4"]);
-      obj["dbs1"] = JSON.stringify(data["dbs1"]);
-      obj["dbs2"] = JSON.stringify(data["dbs2"]);
-      obj["dbs3"] = JSON.stringify(data["dbs3"]);
-      obj["dbs4"] = JSON.stringify(data["dbs4"]);
-      const preQuestion = [];
-      const postQuestion = [];
-      Object.keys(data["preQuestion"]).map(key => {
-        preQuestion.push(data["preQuestion"][key]);
-        return null;
-      });
-      Object.keys(data["postQuestion"]).map(key => {
-        postQuestion.push(data["postQuestion"][key]);
-        return null;
-      });
-      obj["preQuestion"] = preQuestion;
-      obj["postQuestion"] = postQuestion;
       array.push(obj);
     });
     this.setState({ array, headers, datas, reversals: setting.data.reversals });
@@ -190,13 +189,16 @@ class Data extends React.Component {
                     <li>OutPut: Whether the user will use speaker or headphone during the test</li>
                     <li>timer1-t1: how much time (in millisecond) the user took during the block 1 trial 1</li>
                     <li>dbs1-t1: how much decibels the audio has at the end of the block 1 trial 1 (decibel starts from 0 in each block)</li>
+                    <li>question1-t1: the real answer in block 1 trial 1</li>
+                    <li>answer1-t1: the user's answer in block 1 trial 1</li>
+                    <p>(question and answer are composed by 2 digits, the first one is the color: 0 -{">"} red, 1 -{">"} green, 2 -{">"} blue, 3 -{">"} white, and the second one is the number )</p>
                     <li>correct1-t1: whether the user answered the question correct or not in block 1 trial 1</li>
                     <p>(all 1st number represents the # of block, 2nd number represents the # of trial)</p>
                   </ol>
                 </div>
                 <hr />
                 <div id="table">
-                  <h4>Data table</h4>
+                  <h4>Data Operation</h4>
                   <Table data={array} deleteData={this.deleteData} />
                   <br /><br />
                   <h5>

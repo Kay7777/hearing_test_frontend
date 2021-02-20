@@ -24,25 +24,6 @@ export default function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell align="left">ID</TableCell>
-            <TableCell align="left">Email</TableCell>
-            <TableCell align="left">Output</TableCell>
-            <TableCell align="left">DidWearAids</TableCell>
-            <TableCell align="left">WillWearAids</TableCell>
-            <TableCell align="left">Birth</TableCell>
-            <TableCell align="left">Gender</TableCell>
-            <TableCell align="left">Province</TableCell>
-            <TableCell align="left">CRM</TableCell>
-            <TableCell align="left">SNR</TableCell>
-            <TableCell align="left">Decibel 1</TableCell>
-            <TableCell align="left">Decibel 2</TableCell>
-            <TableCell align="left">Decibel 3</TableCell>
-            <TableCell align="left">Decibel 4</TableCell>
-            <TableCell align="left">Timer 1</TableCell>
-            <TableCell align="left">Timer 2</TableCell>
-            <TableCell align="left">Timer 3</TableCell>
-            <TableCell align="left">Timer 4</TableCell>
-            <TableCell align="left">Pre-questions</TableCell>
-            <TableCell align="left">Post-questions</TableCell>
             <TableCell align="left">Operation</TableCell>
           </TableRow>
         </TableHead>
@@ -52,25 +33,6 @@ export default function SimpleTable(props) {
               return (
                 <TableRow>
                   <TableCell align="left">{data.ID}</TableCell>
-                  <TableCell align="left">{data.email}</TableCell>
-                  <TableCell align="left">{data.output}</TableCell>
-                  <TableCell align="left">{data.didWearAids}</TableCell>
-                  <TableCell align="left">{data.willWearAids}</TableCell>
-                  <TableCell align="left">{data.birth}</TableCell>
-                  <TableCell align="left">{data.gender}</TableCell>
-                  <TableCell align="left">{data.province}</TableCell>
-                  <TableCell align="left">{data.order.map((cycle) => cycle + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.SNR).map((SNR) => SNR + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.dbs1).map(db => db + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.dbs2).map(db => db + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.dbs3).map(db => db + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.dbs4).map(db => db + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.timer1).map(time => time + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.timer2).map(time => time + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.timer3).map(time => time + "/")}</TableCell>
-                  <TableCell align="left">{JSON.parse(data.timer4).map(time => time + "/")}</TableCell>
-                  <TableCell align="left">{Object.keys(data.preQuestion).map(key => data.preQuestion[key] + "/")}</TableCell>
-                  <TableCell align="left">{Object.keys(data.postQuestion).map(key => data.postQuestion[key] + "/")}</TableCell>
                   <TableCell align="left"><Button color="secondary" onClick={() => props.deleteData(data._id)}>Delete</Button></TableCell>
                 </TableRow>
               )
