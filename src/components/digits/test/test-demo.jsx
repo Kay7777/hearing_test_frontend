@@ -12,12 +12,12 @@ class TestDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      noise: new Audio(process.env.PUBLIC_URL + "/audios/noise.wav"),
+      noise: new Audio(process.env.PUBLIC_URL + "/functional-audio/noise.wav"),
       noiseVolume: this.props.volume / 100,
       audioVolume: this.props.volume / 100,
-      audio1: new Audio(process.env.PUBLIC_URL + "/audios/" + 8 + ".wav"),
-      audio2: new Audio(process.env.PUBLIC_URL + "/audios/" + 3 + ".wav"),
-      audio3: new Audio(process.env.PUBLIC_URL + "/audios/" + 6 + ".wav"),
+      audio1: new Audio(process.env.PUBLIC_URL + "/digits-audio/" + 8 + ".wav"),
+      audio2: new Audio(process.env.PUBLIC_URL + "/digits-audio/" + 3 + ".wav"),
+      audio3: new Audio(process.env.PUBLIC_URL + "/digits-audio/" + 6 + ".wav"),
       focus: 0,
       click: -1,
       input1: "",
@@ -38,11 +38,11 @@ class TestDemo extends React.Component {
 
   componentDidMount = async () => {
     // preload audios
-    const noise = new Audio(process.env.PUBLIC_URL + "/audios/noise.wav");
+    const noise = new Audio(process.env.PUBLIC_URL + "/functional-audio/noise.wav");
     await noise.play();
     await noise.pause();
     for (let i = 1; i < 10; i++) {
-      const audio = new Audio(process.env.PUBLIC_URL + "/audios/" + i + ".wav");
+      const audio = new Audio(process.env.PUBLIC_URL + "/digits-audio/" + i + ".wav");
       audio.volume = 0;
       await audio.play();
       await audio.pause();

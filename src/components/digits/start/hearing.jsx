@@ -59,7 +59,6 @@ class Hearing extends React.Component {
 
   renderButton = () => {
     const { questions, hearing } = this.state;
-    console.log(hearing);
     if (questions.length === 0) {
       return null;
     } else if (this.validateHearing()) {
@@ -98,7 +97,6 @@ class Hearing extends React.Component {
 
   render() {
     const { hearing, questions } = this.state;
-    console.log(hearing);
     return (
       <Container>
         <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>

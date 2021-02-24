@@ -7,7 +7,7 @@ class SpeechInNoise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      noise: new Audio(process.env.PUBLIC_URL + "/audios/noise.wav"),
+      noise: new Audio(process.env.PUBLIC_URL + "/functional-audio/noise.wav"),
       noiseVolume: this.props.volume / 100,
       audioVolume: this.props.volume / 100,
       realAnswer: "",
@@ -30,17 +30,6 @@ class SpeechInNoise extends React.Component {
   }
 
   componentDidMount = async () => {
-    // preload audios has been done in the test-demo component
-
-    /* const noise = new Audio(process.env.PUBLIC_URL + "/audios/noise.wav");
-    // await noise.play();
-    // await noise.pause();
-    // for (let i = 1; i < 10; i++) {
-    //   const audio = new Audio(process.env.PUBLIC_URL + "/audios/" + i + ".wav");
-    //   audio.volume = 0;
-    //   await audio.play();
-    */
-
     setTimeout(async () => {
       await this.setState({ loading: false });
       await this._focus();
@@ -104,7 +93,7 @@ class SpeechInNoise extends React.Component {
         realAnswer: this.state.realAnswer + index.toString(),
       });
       audios.push(
-        new Audio(process.env.PUBLIC_URL + "/audios/" + index + ".wav")
+        new Audio(process.env.PUBLIC_URL + "/digits-audio/" + index + ".wav")
       );
     }
     setTimeout(() => {

@@ -25,11 +25,21 @@ const Main = (props) => {
         <Card style={{ margin: 20 }}>
           <CardContent>
             <Typography variant="h5" component="h2">
-              Sentences in Noise
+              Sentences in Noise 1
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={() => props.history.push("/signalloss")}>Start</Button>
+            <Button size="small" onClick={() => props.history.push("/crm1")}>Start</Button>
+          </CardActions>
+        </Card>
+        <Card style={{ margin: 20 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              Sentences in Noise 4
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={() => props.history.push("/crm4")}>Start</Button>
           </CardActions>
         </Card>
       </div>

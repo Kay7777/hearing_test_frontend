@@ -7,7 +7,7 @@ class VolumeAdjustment extends React.Component {
     super(props);
     this.state = {
       volumeAdjuest: false,
-      audio: new Audio(process.env.PUBLIC_URL + "/audios/adjust.wav"),
+      audio: new Audio(process.env.PUBLIC_URL + "/functional-audio/adjust.wav"),
       audioPlay: false,
       audioVolume: 0.1,
     };

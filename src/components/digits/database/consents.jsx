@@ -40,7 +40,7 @@ class Page1Question extends React.Component {
             variant="contained"
             color="primary"
             style={{ marginLeft: 20 }}
-            onClick={() => this.props.history.push("/database")}
+            onClick={() => this.props.history.push("/digits/database")}
           >
             Back
           </Button>
