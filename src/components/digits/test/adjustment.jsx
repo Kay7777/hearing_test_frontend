@@ -19,7 +19,6 @@ class VolumeAdjustment extends React.Component {
 
   componentDidUpdate = () => {
     const { audio, audioVolume } = this.state;
-    console.log("volume:", audioVolume);
     audio.volume = audioVolume;
   };
 
@@ -38,7 +37,6 @@ class VolumeAdjustment extends React.Component {
       let rms; // root mean square
       while (i < len) total += Math.abs(input[i++]);
       rms = Math.sqrt(total / len);
-      console.log(rms * 100);
     };
   };
 

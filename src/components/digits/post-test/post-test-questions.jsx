@@ -55,13 +55,13 @@ class PostTestQuestions extends React.Component {
       );
       answers2[questions2[questionIndex]["question"]] = array;
     }
-    this.setState({ answers2 }, () => console.log(this.state.answers2));
+    this.setState({ answers2 });
   };
 
   handleAnswer3 = (answer, index) => {
     const { questions3, answers3 } = this.state;
     answers3[questions3[index]] = answer;
-    this.setState({ answers3 }, () => console.log(this.state.answers3));
+    this.setState({ answers3 });
   };
 
   validateAnswers = () => {

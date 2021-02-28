@@ -97,7 +97,6 @@ class Main extends React.Component {
   }
 
   handleAdjustClick = (output, aids, volume) => {
-    console.log("The final volume", volume);
     this.setState({ output, volume, process: "test", willWearAids: aids });
   }
 
@@ -140,19 +139,19 @@ class Main extends React.Component {
 
 
   handlePostQuestions1 = (postQuestion) => {
-    this.setState({postQuestion1: postQuestion, process: "midpage1"})
+    this.setState({postQuestions1: postQuestion, process: "midpage1"})
   }
 
   handlePostQuestions2 = (postQuestion) => {
-    this.setState({postQuestion2: postQuestion, process: "midpage2"})
+    this.setState({postQuestions2: postQuestion, process: "midpage2"})
   }
 
   handlePostQuestions3 = (postQuestion) => {
-    this.setState({postQuestion3: postQuestion, process: "midpage3"})
+    this.setState({postQuestions3: postQuestion, process: "midpage3"})
   }
 
   handlePostQuestions4 = async (postQuestion) => {
-    await this.setState({ postQuestion4: postQuestion });
+    await this.setState({ postQuestions4: postQuestion });
     await this.handleSubmit(() => this.setState({process: "end"}));
   }
 
@@ -172,7 +171,7 @@ class Main extends React.Component {
     const trials2 = timer2.length;
     const trials3 = timer3.length;
     const trials4 = timer4.length;
-    await axios.post("/api/sentence/user/data", {
+    await axios.post("/api/crm1/user/data", {
       output, email, ID, order, preQuestions, didWearAids, 
       willWearAids, SNR, age, gender, province, 
       timer1, timer2, timer3, timer4, 
@@ -200,7 +199,7 @@ class Main extends React.Component {
   }
 
   renderProcess = () => {
-    const { process, volume } = this.state;
+    const { process, volume, ID } = this.state;
     switch (process) {
       case "welcome":
         return <Welcome />;
@@ -237,7 +236,7 @@ class Main extends React.Component {
       case "postquestion4":
         return <PostQuestion4 handleClick={this.handlePostQuestions4} />
       case "end":
-        return <End />
+        return <End ID={ID}/>
       default:
         return null;
     }

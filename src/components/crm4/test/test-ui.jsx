@@ -56,7 +56,6 @@ class TestMain extends React.Component {
         const { questions, index, timer, lastCorrectness, traversals } = this.state;
         await this.setState({ userStart: false });
         await this.stopTimer();
-        console.log(this.state.time);
         await timer.push(this.state.time);
         await this.resetTimer();
         await this.setState({ timer });
@@ -93,7 +92,6 @@ class TestMain extends React.Component {
                 }
             }
             const SNR = Number(sum / 10).toFixed(2);
-            console.log("SNR is " + SNR);
             this.props.handleClick(SNR, timer, dbs);
         } else {
             setTimeout(() => {

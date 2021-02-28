@@ -31,7 +31,7 @@ class DemoInfo extends React.Component {
 
   renderButton = () => {
     const { ID, age, gender, province, backupProvince } = this.state;
-    if (age !== null && gender !== null && province !== null) {
+    if (age !== null && age < 2003 && gender !== null && province !== null) {
       if (backupProvince === null) {
         return <Button
           variant="contained"
@@ -53,14 +53,17 @@ class DemoInfo extends React.Component {
       }
 
     } else {
-      return <Button
-        variant="contained"
-        color="primary"
-        disabled
-        style={{ margin: 20, width: 150 }}
-      >
-        Next
-    </Button>
+      return <div>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled
+          style={{ margin: 20, width: 150 }}
+        >
+          Next
+        </Button>
+        <h5>You have not completed the form or you are under 18 years old.</h5>
+        </div>
     }
   }
 

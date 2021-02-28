@@ -46,7 +46,6 @@ class Test extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     const { dbs } = this.state;
     return (
       <div style={{ position: "relative", marginLeft: "30%", marginTop: "20%" }}>

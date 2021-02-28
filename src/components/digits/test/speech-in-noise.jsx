@@ -63,29 +63,22 @@ class SpeechInNoise extends React.Component {
         }),
       10
     );
-    console.log("start");
   };
   stopTimer = () => {
     clearInterval(this.timer);
-    console.log("stop");
   };
   resetTimer = () => {
     this.setState({ time: 0 });
-    console.log("reset");
   };
 
   handlePlay = async () => {
     const { audioVolume, noiseVolume, timer, noise } = this.state;
-    console.log("Signal Volume: " + audioVolume);
-    console.log("Noise Volume: " + noiseVolume);
     if (this.state.time !== 0) {
       this.stopTimer();
       timer.push(Number(this.state.time).toFixed(3));
       this.resetTimer();
       this.setState({ timer });
     }
-    console.log("Timer:", this.state.timer);
-    console.log("DB:", this.state.dbs);
     const audios = [];
     for (let i = 0; i < 3; i++) {
       const index = Math.floor(Math.random() * 9) + 1;
@@ -124,8 +117,6 @@ class SpeechInNoise extends React.Component {
   checkAnswer = async () => {
     const { realAnswer, input1, input2, input3, step } = this.state;
     const userAnswer = input1 + input2 + input3;
-    console.log("Real Answer: " + realAnswer);
-    console.log("User Answer: " + userAnswer);
     if (realAnswer !== userAnswer) {
       const audioVolume = this.goEasier(step);
       await this.setState({ audioVolume });
@@ -160,8 +151,6 @@ class SpeechInNoise extends React.Component {
         sum += this.state.dbs[i];
       }
       const SNR = Number(sum / 5).toFixed(3);
-      console.log("SNR is " + SNR);
-      // return SNR and Timer
       this.props.handleClick(SNR, timer);
     }
   };
@@ -244,7 +233,6 @@ class SpeechInNoise extends React.Component {
 
   handleKeyEnter = (e) => {
     if (this.state.input3 !== "" && e.keyCode === 13) {
-      console.log("KeyBoard Listen: Enter");
       this.checkAnswer();
     }
   };

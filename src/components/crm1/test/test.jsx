@@ -26,7 +26,7 @@ class TestMain extends React.Component {
 
     componentDidMount = async () => {
         let num = 0;
-        for (var i = 0; i < 4; i++) {
+        for (var i = 1; i < 5; i++) {
             for (var j = 1; j < 9; j++) {
                 const audio3 = new Audio(process.env.PUBLIC_URL + "/crm1-source-audio/" + i.toString() + j.toString() + ".wav");
                 audio3.volume = 0;
@@ -42,7 +42,7 @@ class TestMain extends React.Component {
         audio.volume = 0;
         await audio.play();
         audio.pause();
-        this.setState({ loading: false }, () => console.log(this.state));
+        this.setState({ loading: false });
     }
 
     startTimer = () => {
@@ -63,7 +63,7 @@ class TestMain extends React.Component {
 
     playAudio = async () => {
         const { questions, maskVolume, sourceVolume } = this.state;
-        const color = Math.floor(Math.random() * 4).toString();
+        const color = Math.ceil(Math.random() * 4).toString();
         const number = Math.ceil(Math.random() * 8).toString();
         const question = color + number
         questions.push(question);

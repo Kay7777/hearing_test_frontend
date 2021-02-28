@@ -25,7 +25,7 @@ class TestMain extends React.Component {
     }
 
     componentDidMount = async () => {
-        for (var i = 0; i < 4; i++) {
+        for (var i = 1; i < 5; i++) {
             for (var j = 1; j < 9; j++) {
                 const audio1 = new Audio(process.env.PUBLIC_URL + "/crm4-source-audio/" + i.toString() + j.toString() + ".wav");
                 const audio2 = new Audio(process.env.PUBLIC_URL + "/crm4-mask-audio/" + i.toString() + j.toString() + ".wav");
@@ -56,7 +56,7 @@ class TestMain extends React.Component {
 
     playAudio = async () => {
         const { questions, maskVolume, sourceVolume } = this.state;
-        const color = Math.floor(Math.random() * 4).toString();
+        const color = Math.ceil(Math.random() * 4).toString();
         const number = Math.ceil(Math.random() * 8).toString();
         const question = color + number
         questions.push(question);

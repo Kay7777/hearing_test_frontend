@@ -14,11 +14,9 @@ export default (props) => {
           marginTop: "15%",
         }}
       >
-        <h2>
-          Thank you for submitting your responses. You may now close your
-          browser tab. Don’t forget to check your email for an important message
-          from the researchers.
-        </h2>
+        <h2>Thank you for submitting your responses. </h2>
+        <h3>You may now close your browser tab.</h3>
+        <h3>Don’t forget to check your email for an important message from the researchers.</h3>
       </div>
     </Container>
   );

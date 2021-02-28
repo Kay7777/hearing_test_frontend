@@ -11,15 +11,17 @@ class Data extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/sentence/user/data");
-    const setting = await axios.get("/api/crm1/reversals");
+    const doc = await axios.get("/api/crm4/user/data");
+    const setting = await axios.get("/api/crm4/reversals");
     const array = [];
     const datas = [];
     const headers = [
-      "ID", "Email", "Reversals", "block1", "trials1", "SNR1", "block2", "trials2", 
-      "SNR2", "block3", "trials3", "SNR3", "block4", "trials4", "SNR4", "Gender", 
-      "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output", 
-      "preQuestion1", "preQuestion2", "preQuestion3", "postQuestion1", "postQuestion2"
+      "ID", "Email", "Reversals", "Gender", "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output", 
+      "preQuestion1", "preQuestion2", "preQuestion3",
+      "block1", "trials1", "SNR1", "b1-postQuestion1", "b1-postQuestion2",
+      "block2", "trials2", "SNR2", "b2-postQuestion1", "b2-postQuestion2",
+      "block3", "trials3", "SNR3", "b3-postQuestion1", "b3-postQuestion2",
+      "block4", "trials4", "SNR4", "b4-postQuestion1", "b4-postQuestion2",
     ];
     
     // wirte headers
@@ -34,7 +36,6 @@ class Data extends React.Component {
       if (data["timer3"].length > trials3) trials3 = data["timer3"].length;
       if (data["timer4"].length > trials4) trials4 = data["timer4"].length;
     })
-    console.log(trials1, trials2, trials3, trials4);
     for (let i=1; i<=4; i++) {
       let trials;
       switch(i){
@@ -61,22 +62,45 @@ class Data extends React.Component {
     };
     // write datas
     doc.data.map(data => {
+      /*
+       "ID", "Email", "Reversals", "Gender", "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output", 
+      "preQuestion1", "preQuestion2", "preQuestion3",
+      "block1", "trials1", "SNR1", "b1-postQuestion1", "b1-postQuestion2",
+      "block2", "trials2", "SNR2", "b2-postQuestion1", "b2-postQuestion2",
+      "block3", "trials3", "SNR3", "b3-postQuestion1", "b3-postQuestion2",
+      "block4", "trials4", "SNR4", "b4-postQuestion1", "b4-postQuestion2",
+      */
       const row = [
-        String(data["ID"]), String(data["email"]), String(data["reversals"]), 
-        String(data["order"][0]), String(data["trials1"]), String(data["SNR"][0]),
-        String(data["order"][1]), String(data["trials2"]), String(data["SNR"][1]),
-        String(data["order"][2]), String(data["trials3"]), String(data["SNR"][2]),
-        String(data["order"][3]), String(data["trials4"]), String(data["SNR"][3]),
-        String(data["gender"]), String(data["province"]),
-        String(data["age"]), String(data["didWearAids"]), String(data["willWearAids"]),
-        String(data["output"])
+        String(data["ID"]), String(data["email"]), String(data["reversals"]), String(data["gender"]), String(data["province"]),
+        String(data["age"]), String(data["didWearAids"]), String(data["willWearAids"]), String(data["output"])
       ];
       // add pre and post questions
-      Object.keys(data["preQuestion"]).map(key => {
-        row.push(data["preQuestion"][key]);
+      Object.keys(data["preQuestions"]).map(key => {
+        row.push(data["preQuestions"][key]);
       });
-      Object.keys(data["postQuestion"]).map(key => {
-        row.push(data["postQuestion"][key]);
+      row.push(
+        String(data["order"][0]), String(data["trials1"]), String(data["SNR"][0])
+      )
+      Object.keys(data["postQuestions1"]).map(key => {
+        row.push(data["postQuestions1"][key]);
+      });
+      row.push(
+        String(data["order"][1]), String(data["trials2"]), String(data["SNR"][1])
+      )
+      Object.keys(data["postQuestions2"]).map(key => {
+        row.push(data["postQuestions2"][key]);
+      });
+      row.push(
+        String(data["order"][2]), String(data["trials3"]), String(data["SNR"][2])
+      )
+      Object.keys(data["postQuestions3"]).map(key => {
+        row.push(data["postQuestions3"][key]);
+      });
+      row.push(
+        String(data["order"][3]), String(data["trials4"]), String(data["SNR"][3])
+      )
+      Object.keys(data["postQuestions4"]).map(key => {
+        row.push(data["postQuestions4"][key]);
       });
       // add correct, questions, answers, etc.
       for (let i=1; i<=4; i++) {
@@ -143,7 +167,7 @@ class Data extends React.Component {
   }
 
   deleteData = async (id) => {
-    await axios.delete("/api/sentence/user/data/" + id);
+    await axios.delete("/api/crm4/user/data/" + id);
     this.componentDidMount();
   }
 
@@ -157,7 +181,7 @@ class Data extends React.Component {
   }
 
   updateReversals = async () => {
-    await axios.put("/api/crm1/reversals", {reversals: this.state.newReversals});
+    await axios.put("/api/crm4/reversals", {reversals: this.state.newReversals});
     this.componentDidMount();
   }
 
@@ -167,11 +191,7 @@ class Data extends React.Component {
       login ?
         <Container>
           <br />
-          <h3 style={{ textAlign: "center" }}>Welcome to CRM1 database</h3>
-          {
-            array.length === 0 ?
-              <h4>Loading ... (or there is no data in the database)</h4>
-              :
+          <h3 style={{ textAlign: "center" }}>Welcome to CRM4 database</h3>
               <div>
                 <hr />
                 <div id="spreadsheet">
@@ -191,9 +211,10 @@ class Data extends React.Component {
                     <li>dbs1-t1: how much decibels the audio has at the end of the block 1 trial 1 (decibel starts from 0 in each block)</li>
                     <li>question1-t1: the real answer in block 1 trial 1</li>
                     <li>answer1-t1: the user's answer in block 1 trial 1</li>
-                    <p>(question and answer are composed by 2 digits, the first one is the color: 0 -{">"} red, 1 -{">"} green, 2 -{">"} blue, 3 -{">"} white, and the second one is the number )</p>
+                    <p>(question and answer are composed by 2 digits, the first one is the color: 1 -{">"} red, 2 -{">"} green, 3 -{">"} blue, 4 -{">"} white, and the second one is the number )</p>
                     <li>correct1-t1: whether the user answered the question correct or not in block 1 trial 1</li>
                     <p>(all 1st number represents the # of block, 2nd number represents the # of trial)</p>
+                    <li>b1-postQuestion1: the answer for the first post-test question in block 1</li>
                   </ol>
                 </div>
                 <hr />
@@ -222,9 +243,6 @@ class Data extends React.Component {
                 <hr />
                 <br />
               </div>
-
-
-          }
         </Container>
         :
         <Container>

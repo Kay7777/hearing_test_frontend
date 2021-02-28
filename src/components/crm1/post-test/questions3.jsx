@@ -46,7 +46,7 @@ class Questions extends React.Component {
             marginBottom: 10,
           }}
         >
-          Submit
+          Next
         </Button>
       );
     } else {
@@ -61,7 +61,7 @@ class Questions extends React.Component {
           }}
           disabled={true}
         >
-          Submit
+          Next
         </Button>
       );
     }

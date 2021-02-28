@@ -13,7 +13,6 @@ class UserData extends React.Component {
   }
   componentDidMount = async () => {
     const doc = await axios.get("/api/digits/user/data");
-    console.log(doc.data);
     this.setState({ data: doc.data });
   };
 
