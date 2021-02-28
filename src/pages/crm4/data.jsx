@@ -62,14 +62,6 @@ class Data extends React.Component {
     };
     // write datas
     doc.data.map(data => {
-      /*
-       "ID", "Email", "Reversals", "Gender", "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output", 
-      "preQuestion1", "preQuestion2", "preQuestion3",
-      "block1", "trials1", "SNR1", "b1-postQuestion1", "b1-postQuestion2",
-      "block2", "trials2", "SNR2", "b2-postQuestion1", "b2-postQuestion2",
-      "block3", "trials3", "SNR3", "b3-postQuestion1", "b3-postQuestion2",
-      "block4", "trials4", "SNR4", "b4-postQuestion1", "b4-postQuestion2",
-      */
       const row = [
         String(data["ID"]), String(data["email"]), String(data["reversals"]), String(data["gender"]), String(data["province"]),
         String(data["age"]), String(data["didWearAids"]), String(data["willWearAids"]), String(data["output"])

@@ -35,6 +35,26 @@ const Main = (props) => {
         <Card style={{ margin: 20 }}>
           <CardContent>
             <Typography variant="h5" component="h2">
+              Sentences in Noise 2
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" disabled onClick={() => props.history.push("/crm2")}>Start</Button>
+          </CardActions>
+        </Card>
+        <Card style={{ margin: 20 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              Sentences in Noise 3
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={() => props.history.push("/crm3")}>Start</Button>
+          </CardActions>
+        </Card>
+        <Card style={{ margin: 20 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
               Sentences in Noise 4
             </Typography>
           </CardContent>
