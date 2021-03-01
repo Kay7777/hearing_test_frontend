@@ -39,7 +39,7 @@ const Main = (props) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" disabled onClick={() => props.history.push("/crm2")}>Start</Button>
+            <Button size="small" onClick={() => props.history.push("/crm2")}>Start</Button>
           </CardActions>
         </Card>
         <Card style={{ margin: 20 }}>
@@ -60,6 +60,16 @@ const Main = (props) => {
           </CardContent>
           <CardActions>
             <Button size="small" onClick={() => props.history.push("/crm4")}>Start</Button>
+          </CardActions>
+        </Card>
+        <Card style={{ margin: 20 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              Questionnaire
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" disabled onClick={() => props.history.push("/questionnaire")}>Start</Button>
           </CardActions>
         </Card>
       </div>

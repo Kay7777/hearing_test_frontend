@@ -5,6 +5,7 @@ class TestMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            noise: new Audio(process.env.PUBLIC_URL + "/functional-audio/noise.wav"),
             loading: true,
             maskVolume: this.props.volume,
             sourceVolume: this.props.volume,
@@ -27,24 +28,20 @@ class TestMain extends React.Component {
         let num = 0;
         for (var i = 1; i < 5; i++) {
             for (var j = 1; j < 9; j++) {
-                const audio1 = new Audio(process.env.PUBLIC_URL + "/crm3-source-audio/" + i.toString() + j.toString() + ".wav");
-                const audio2 = new Audio(process.env.PUBLIC_URL + "/crm3-loss-audio/" + i.toString() + j.toString() + ".wav");
-                const audio3 = new Audio(process.env.PUBLIC_URL + "/crm3-mask-audio/" + i.toString() + j.toString() + ".wav");
-                audio1.volume = 0;
-                audio2.volume = 0;
+                const audio3 = new Audio(process.env.PUBLIC_URL + "/crm1-source-audio/" + i.toString() + j.toString() + ".wav");
                 audio3.volume = 0;
                 try {
                     num += 1;
                     await this.setState({ process: num });
-                    await audio1.play();
-                    await audio2.play();
                     await audio3.play();
-                    await audio1.pause();
-                    await audio2.pause();
-                    await audio3.pause();
+                    audio3.pause();
                 } catch (e) { console.log(e, "for", i, j) }
             }
         }
+        const audio = this.state.noise;
+        audio.volume = 0;
+        await audio.play();
+        audio.pause();
         this.setState({ loading: false });
     }
 
@@ -71,12 +68,12 @@ class TestMain extends React.Component {
         const question = color + number
         questions.push(question);
         this.setState({ questions });
-        let sourceAudio = new Audio(process.env.PUBLIC_URL + "/crm3-source-audio/" + question + ".wav");
-        let maskAudio = new Audio(process.env.PUBLIC_URL + "/crm3-mask-audio/" + question + ".wav");
+        let sourceAudio = new Audio(process.env.PUBLIC_URL + "/crm1-source-audio/" + question + ".wav");
+        const maskAudio = this.state.noise;
         sourceAudio.volume = sourceVolume;
         maskAudio.volume = 0.5 * maskVolume;
         await sourceAudio.play();
-        setTimeout(() => maskAudio.play(), 300);
+        await maskAudio.play();
         setTimeout(() => {
             maskAudio.pause();
             this.startTimer();

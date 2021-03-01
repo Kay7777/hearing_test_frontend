@@ -65,7 +65,7 @@ class TestMain extends React.Component {
         sourceAudio.volume = sourceVolume;
         maskAudio.volume = maskVolume;
         await sourceAudio.play();
-        await maskAudio.play();
+        setTimeout(() => maskAudio.play(), 300);
         setTimeout(() => {
             maskAudio.pause();
             this.startTimer();
