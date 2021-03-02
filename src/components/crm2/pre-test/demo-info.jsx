@@ -81,7 +81,7 @@ class DemoInfo extends React.Component {
           }}
         >
           <h3>Your participant ID is: {ID}</h3>
-          <h5>You may contact the investigators and use this number to withdraw your data up to one week after you have completed the experiment.</h5>
+          <h5>You may contact the investigators at jcbhlab@ualberta.ca and use this number to withdraw your data up to one week after you have completed the experiment.</h5>
           <h5>Please answer the questions below using the provided dropdown boxes.</h5>
           <br />
           <FormControl>

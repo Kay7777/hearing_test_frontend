@@ -223,8 +223,8 @@ class Data extends React.Component {
                   <h5>
                     Post-questions:
                   </h5>
-                  <h6>1. How difficult did you find this experiment? Please make a mark on the line below.</h6>
-                  <h6>2. How much effort did it take for you to complete this experiment? Please make a mark on the line below.</h6>
+                  <h6>1. How difficult did you find this block? Please make a mark on the line below.</h6>
+                  <h6>2. How much effort did it take for you to complete this block? Please make a mark on the line below.</h6>
                 </div>
                 <hr />
                 <div id="reversals">

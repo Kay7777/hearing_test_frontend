@@ -144,7 +144,7 @@ class TestMain extends React.Component {
                             <Container>
                                 <div style={{ marginTop: "20%", marginLeft: "10%", marginRight: "10%" }}>
                                     <h4>You are now ready to start the experiment. You are always listening for the call sign Baron.</h4>
-                                    <h4>For example if you hear "Ready Baron, go to Blue 2 now", you should click on the blue 2. If you aren’t sure, make a guess!</h4>
+                                    <h4>For example if you hear "Ready Baron, go to Blue 2 now," you should click on the blue 2. If you aren’t sure, make a guess!</h4>
                                     <h4>There is a pause button located beside the progress bar. You may pause the experiment between audio presentations. Click this button again to resume the experiment.</h4>
                                     <h4>Press NEXT when you are ready to start.</h4>
                                     <Button

@@ -9,8 +9,8 @@ class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: ["How difficult did you find this experiment? Please make a mark on the line below.",
-        "How much effort did it take for you to complete this experiment? Please make a mark on the line below."],
+      questions: ["How difficult did you find this block? Please make a mark on the line below.",
+        "How much effort did it take for you to complete this block? Please make a mark on the line below."],
       hearing: {},
     };
   }
