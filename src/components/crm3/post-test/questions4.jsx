@@ -51,6 +51,7 @@ class Questions extends React.Component {
       );
     } else {
       return (
+        <div>
         <Button
           color="primary"
           variant="contained"
@@ -63,6 +64,8 @@ class Questions extends React.Component {
         >
           Submit
         </Button>
+        <p>You cannot progress to the next step because you have not completed the questions.</p>
+        </div>
       );
     }
   };

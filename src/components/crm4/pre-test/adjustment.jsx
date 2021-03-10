@@ -63,7 +63,7 @@ class VolumeAdjustment extends React.Component {
         Next
     </Button>
     } else {
-      return <Button
+      return <div><Button
         variant="contained"
         color="primary"
         disabled
@@ -71,6 +71,8 @@ class VolumeAdjustment extends React.Component {
       >
         Next
     </Button>
+    <p>You cannot progress to the next step because you have not completed the questions.</p>
+    </div>
     }
   }
 

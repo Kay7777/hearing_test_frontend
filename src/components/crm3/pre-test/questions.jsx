@@ -56,18 +56,21 @@ class Questions extends React.Component {
       );
     } else {
       return (
-        <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          style={{
-            width: 200,
-            marginBottom: 10,
-          }}
-          disabled={true}
-        >
-          OK
-        </Button>
+        <div>
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            style={{
+              width: 200,
+              marginBottom: 10,
+            }}
+            disabled={true}
+          >
+            OK
+          </Button>
+          <p>You cannot progress to the next step because you have not completed the questions.</p>
+        </div>
       );
     }
   };

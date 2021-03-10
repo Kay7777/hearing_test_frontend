@@ -53,15 +53,28 @@ class TestMain extends React.Component {
         this.setState({ time: 0, alert: false });
     };
 
-    playAudio = async () => {
-        const { questions, maskVolume, sourceVolume } = this.state;
+    getTargetAndMask = () => {
+        const {  questions } = this.state;
         const color = Math.ceil(Math.random() * 4).toString();
         const number = Math.ceil(Math.random() * 8).toString();
-        const question = color + number
+        const colorMask = Math.ceil(Math.random() * 4).toString();
+        const numberMask = Math.ceil(Math.random() * 8).toString();
+        const question = color + number;
+        const questionMask = colorMask + numberMask;
+        if (question == questionMask) {
+            return this.getTargetAndMask();
+        }
         questions.push(question);
         this.setState({ questions });
+        return { question, questionMask };
+    }
+
+    playAudio = async () => {
+        const {  maskVolume, sourceVolume } = this.state;
+        const { question, questionMask } = this.getTargetAndMask();
+        console.log("Question and mask: ", question, questionMask);
         let sourceAudio = new Audio(process.env.PUBLIC_URL + "/crm3-loss-audio/" + question + ".wav");
-        let maskAudio = new Audio(process.env.PUBLIC_URL + "/crm3-mask-audio/" + question + ".wav");
+        let maskAudio = new Audio(process.env.PUBLIC_URL + "/crm3-mask-audio/" + questionMask + ".wav");
         sourceAudio.volume = sourceVolume;
         maskAudio.volume = maskVolume;
         await sourceAudio.play();

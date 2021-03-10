@@ -152,14 +152,16 @@ checkbox questions on the second page to consent to participate in this study.</
                       Next
                     </Button>
                     :
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ margin: 20, width: 150 }}
-                      disabled
-                    >
-                      Next
+                    <div><Button
+                        variant="contained"
+                        color="primary"
+                        disabled
+                        style={{ margin: 20, width: 150 }}
+                      >
+                        Next
                     </Button>
+                    <p>You cannot progress to the next step because you have not completed the consent questions.</p>
+                    </div>
                 }
               </div>
               :

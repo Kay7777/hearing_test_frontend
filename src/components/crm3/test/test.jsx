@@ -69,10 +69,13 @@ class TestMain extends React.Component {
         const color = Math.ceil(Math.random() * 4).toString();
         const number = Math.ceil(Math.random() * 8).toString();
         const question = color + number
+        const colorMask = Math.ceil(Math.random() * 4).toString();
+        const numberMask = Math.ceil(Math.random() * 8).toString();
+        const questionMask = colorMask + numberMask
         questions.push(question);
         this.setState({ questions });
         let sourceAudio = new Audio(process.env.PUBLIC_URL + "/crm3-source-audio/" + question + ".wav");
-        let maskAudio = new Audio(process.env.PUBLIC_URL + "/crm3-mask-audio/" + question + ".wav");
+        let maskAudio = new Audio(process.env.PUBLIC_URL + "/crm3-mask-audio/" + questionMask + ".wav");
         sourceAudio.volume = sourceVolume;
         maskAudio.volume = 0.5 * maskVolume;
         await sourceAudio.play();
