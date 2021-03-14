@@ -26,9 +26,9 @@ class TestDemo extends React.Component {
       stage: 0,
       continue: true,
       promps: [
-        "Use your keyboard to enter numbers, or click the number pad on the screen",
-        "Use the delete button if you entered a number by accident. Or press backspace on your keyboard.",
-        "When you have finished entering the three digits, click OK to move to the next item. Or press Enter on your keyboard",
+        "Instruction: Use your keyboard to enter numbers, or click the number pad on the screen",
+        "Instruction: Use the delete button if you entered a number by accident. Or press backspace on your keyboard.",
+        "Instruction: When you have finished entering the three digits, click OK to move to the next item. Or press Enter on your keyboard",
       ],
     };
     this.input1 = React.createRef();
@@ -82,67 +82,69 @@ class TestDemo extends React.Component {
     setTimeout(() => {
       noise.volume = noiseVolume;
       if (this.state.continue) noise.play();
-    }, 100);
+      this.setState({stage: 4});
+    }, 3100);
     setTimeout(() => {
       audio1.volume = audioVolume;
       if (this.state.continue) audio1.play();
       else noise.pause();
-    }, 500);
+    }, 3500);
     setTimeout(() => {
       this.setState({ input1: "8", focus: 0, click: 8 });
-    }, 1000);
+    }, 4000);
     setTimeout(() => {
       audio2.volume = audioVolume;
       if (this.state.continue) audio2.play();
       else noise.pause();
-    }, 1700);
+    }, 4700);
     setTimeout(() => {
       this.setState({ input2: "3", focus: 1, click: 3 });
-    }, 2200);
+    }, 5200);
     setTimeout(() => {
       audio3.volume = audioVolume;
       if (this.state.continue) audio3.play();
       else noise.pause();
-    }, 2900);
+    }, 5900);
     setTimeout(() => {
       this.setState({ input3: "6", focus: 2, click: 6 });
-    }, 3400);
+    }, 6400);
     setTimeout(() => {
       noise.pause();
-    }, 4100);
+      this.setState({ stage: 2 });
+    }, 7100);
     setTimeout(() => {
-      this.setState({ click: -1, stage: 2 });
-    }, 4500);
+      this.setState({ click: -1, stage: 4 });
+    }, 10500);
     setTimeout(() => {
       this.setState({ click: "x" });
       this.handleDelete();
-    }, 5000);
+    }, 11000);
     setTimeout(() => {
       this.setState({ click: -1 });
-    }, 5600);
+    }, 11600);
     setTimeout(() => {
       this.setState({ click: "x" });
       this.handleDelete();
-    }, 6200);
+    }, 12200);
     setTimeout(() => {
       this.setState({ click: -1 });
-    }, 6800);
+    }, 12800);
     setTimeout(() => {
-      this.setState({ click: "x" });
+      this.setState({ click: "x", stage: 3 });
       this.handleDelete();
-    }, 7400);
+    }, 13400);
     setTimeout(() => {
-      this.setState({ click: -1, stage: 3 });
-    }, 8000);
+      this.setState({ click: -1, stage: 4 });
+    }, 17000);
     setTimeout(() => {
       this.setState({ input2: "3", focus: 1, click: 3 });
-    }, 8500);
+    }, 17500);
     setTimeout(() => {
       this.setState({ input3: "6", focus: 2, click: 6 });
-    }, 9200);
+    }, 18200);
     setTimeout(() => {
       this.setState({ click: "ok" });
-    }, 10000);
+    }, 19000);
     setTimeout(() => {
       this.setState({
         input1: "",
@@ -155,7 +157,7 @@ class TestDemo extends React.Component {
       if (this.state.continue) {
         this.handlePlay();
       }
-    }, 12000);
+    }, 21000);
   };
 
   changeAnswer = (value) => {
@@ -206,7 +208,7 @@ class TestDemo extends React.Component {
   };
 
   renderInputs = () => {
-    const { input1, input2, input3 } = this.state;
+    const { input1, input2, input3, stage } = this.state;
     return (
       <div>
         <Input
@@ -254,27 +256,28 @@ class TestDemo extends React.Component {
     const { stage, promps, click } = this.state;
     return (
       <div className="row">
-        <div className="col-4" style={{ marginLeft: "34%" }}>
-          <div className="rows">
-            <Fab
-              color={click === 1 ? "primary" : "default"}
-              style={{ marginLeft: 6, marginRight: 6 }}
-            >
-              1
-            </Fab>
-            <Fab
-              color={click === 2 ? "primary" : "default"}
-              style={{ marginLeft: 6, marginRight: 6 }}
-            >
-              2
-            </Fab>
-            <Fab
-              color={click === 3 ? "primary" : "default"}
-              style={{ marginLeft: 6, marginRight: 6 }}
-            >
-              3
-            </Fab>
-          </div>
+        {
+          <div className="col-4" style={{ marginLeft: "34%" }}>
+            <div className="rows">
+              <Fab
+                color={click === 1 ? "primary" : "default"}
+                style={{ marginLeft: 6, marginRight: 6 }}
+              >
+                1
+              </Fab>
+              <Fab
+                color={click === 2 ? "primary" : "default"}
+                style={{ marginLeft: 6, marginRight: 6 }}
+              >
+                2
+              </Fab>
+              <Fab
+                color={click === 3 ? "primary" : "default"}
+                style={{ marginLeft: 6, marginRight: 6 }}
+              >
+                3
+              </Fab>
+            </div>
           <div className="rows">
             <Fab
               color={click === 4 ? "primary" : "default"}
@@ -330,6 +333,7 @@ class TestDemo extends React.Component {
             </Fab>
           </div>
         </div>
+        }
         <div className="col">
           <h4 className="font-weight-light text-success">
             {stage === 0 ? null : promps[stage - 1]}
@@ -354,10 +358,7 @@ class TestDemo extends React.Component {
           }}
         >
           {stage === 0 ? (
-            <div>
-              <CircularProgress />
-              <h2> Loading audio data ... </h2>
-            </div>
+            <h1>Loading ... </h1>
           ) : (
               <div>
                 <h2 className="font-weight-light">

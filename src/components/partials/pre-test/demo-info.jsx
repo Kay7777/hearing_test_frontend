@@ -4,8 +4,6 @@ import {
   Button,
   InputLabel, Select, MenuItem, TextField
 } from "@material-ui/core";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 
 class DemoInfo extends React.Component {
@@ -16,12 +14,21 @@ class DemoInfo extends React.Component {
       age: null,
       gender: null,
       province: null,
-      backupProvince: null
+      backupProvince: null,
+      agePicker: []
     };
   }
 
   componentDidMount = () => {
-    this.setState({ ID: Math.random().toString().substr(2, 4) });
+    const agePicker = [];
+    for (let i=18; i<=120; i++){
+      agePicker.push(i);
+    }
+    this.setState({ agePicker, ID: Math.random().toString().substr(2, 4) });
+  }
+
+  handleAgeChange = (e) => {
+    this.setState({ age: e.target.value });
   }
 
   handleGenderChange = (e) => {
@@ -34,17 +41,10 @@ class DemoInfo extends React.Component {
 
   handleValidation = () => {
     const { age, gender, province } = this.state;
-    let validation = true;
-    if (age) {
-      const gap = (Date.now() - age) / (31557600000);
-      if (gap < 18) validation = false;
-    } else {
-      validation = false;
+    if (age !== null && gender !== null && province !== null) {
+      return true;
     }
-    if (gender == null || province == null) {
-      validation = false;
-    }
-    return validation;
+    return false;
   }
 
   renderButton = () => {
@@ -86,7 +86,7 @@ class DemoInfo extends React.Component {
   }
 
   render() {
-    const { ID, age, gender, province, backupProvince } = this.state;
+    const { ID, age, gender, province, backupProvince, agePicker } = this.state;
     return (
       <Container>
         <div
@@ -102,11 +102,21 @@ class DemoInfo extends React.Component {
           <h5>You may contact the investigators at jcbhlab@ualberta.ca and use this number to withdraw your data up to one week after you have completed the experiment.</h5>
           <h5>Please answer the questions below using the provided dropdown boxes.</h5>
           <br />
-         <div id="age">
-          <h3>When were you born?</h3>
-          <p>(you can enter your birth year first, then pick the date)</p>
-          <DatePicker selected={age} onChange={age => this.setState({ age })} />
-         </div>
+          <div id="age">
+            <InputLabel id="label">Age</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select gender"
+              value={age}
+              onChange={this.handleAgeChange}
+            >
+              {
+                agePicker.length !== 0 ?
+                agePicker.map((age) => <MenuItem value={age}>{age}</MenuItem>)
+                : null
+              }
+            </Select>
+          </div>
           <br /><br />
           <div>
             <InputLabel id="label">Gender</InputLabel>

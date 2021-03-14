@@ -1,21 +1,26 @@
 import React from "react";
-import Welcome from "../../components/crm2/pre-test/welcome";
-import Source1 from "../../components/crm2/test/source1";
-import Source2 from "../../components/crm2/test/source2";
-import Source3 from "../../components/crm2/test/source3";
-import Source4 from "../../components/crm2/test/source4";
-import Adjustment from "../../components/crm2/pre-test/adjustment";
-import Questions from "../../components/crm2/pre-test/questions";
-import Test from "../../components/crm2/test/test";
-import End from "../../components/crm2/post-test/end";
-import ICF from "../../components/crm2/pre-test/ICF";
-import DemoInfo from "../../components/crm2/pre-test/demo-info";
-import MidPage from "../../components/crm2/test/mid-page";
-import PostQuestion1 from "../../components/crm2/post-test/questions1";
-import PostQuestion2 from "../../components/crm2/post-test/questions2";
-import PostQuestion3 from "../../components/crm2/post-test/questions3";
-import PostQuestion4 from "../../components/crm2/post-test/questions4";
 import axios from "axios";
+
+import ICF from "../../components/partials/pre-test/ICF";
+import Welcome from "../../components/partials/pre-test/welcome";
+import Adjustment from "../../components/partials/pre-test/adjustment";
+import Questions from "../../components/partials/pre-test/questions";
+import DemoInfo from "../../components/partials/pre-test/demo-info";
+
+import Test from "../../components/crm2/test";
+import MidPage from "../../components/crm2/mid-page";
+import Source1 from "../../components/crm2/source1";
+import Source2 from "../../components/crm2/source2";
+import Source3 from "../../components/crm2/source3";
+import Source4 from "../../components/crm2/source4";
+
+import PostQuestion1 from "../../components/partials/post-test/questions1";
+import PostQuestion2 from "../../components/partials/post-test/questions2";
+import PostQuestion3 from "../../components/partials/post-test/questions3";
+import PostQuestion4 from "../../components/partials/post-test/questions4";
+import End from "../../components/partials/post-test/end";
+
+
 
 class Main extends React.Component {
   constructor(props) {

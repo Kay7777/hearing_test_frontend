@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 export default function ContinuousSlider(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(10);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

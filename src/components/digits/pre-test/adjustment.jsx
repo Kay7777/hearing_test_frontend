@@ -1,27 +1,25 @@
 import React from "react";
-import { Button, Container, TextField, InputLabel, Select, MenuItem } from "@material-ui/core";
-import VolumeSlider from "../../../assets/signal-loss/volume-slider";
+import { Button, Container, Select, MenuItem } from "@material-ui/core";
+import VolumeSlider from "../../../assets/digits/volume-slider";
 
 class VolumeAdjustment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      volumeAdjuest: false,
       audio: new Audio(process.env.PUBLIC_URL + "/functional-audio/adjust.wav"),
       audioPlay: false,
-      audioVolume: 0,
-      output: null,
-      aids: null,
+      volume: 0,
+      output: null
     };
   }
   componentDidMount = () => {
-    const { audio, audioVolume } = this.state;
-    audio.volume = audioVolume;
+    const { audio, volume } = this.state;
+    audio.volume = volume / 100;
   };
 
   componentDidUpdate = () => {
-    const { audio, audioVolume } = this.state;
-    audio.volume = audioVolume;
+    const { audio, volume } = this.state;
+    audio.volume = volume / 100;
   };
 
   handlePlay = async () => {
@@ -36,55 +34,52 @@ class VolumeAdjustment extends React.Component {
     this.setState({ audioPlay: false });
   };
 
-  handleVolume = (volume) => {
-    this.setState({ audioVolume: volume / 100 });
+  handleNext = () => {
+    const { volume, output } = this.state;
+    this.state.audio.pause();
+    this.props.handleClick(volume, output);
   };
 
   handleChangeOutput = (e) => {
     this.setState({ output: e.target.value });
   }
 
-  handleAidsChange = (e) => {
-    this.setState({ aids: e.target.value });
-  }
-
-  renderButton = () => {
-    const { output, aids, audioVolume } = this.state;
-    if (!!output && aids != null && !!audioVolume) {
+  renderNextButton = () => {
+    const { volume, output } = this.state;
+    if (volume !== 0 && output !== null) {
       return <Button
         variant="contained"
         color="primary"
-        style={{ margin: 20, width: 150, backgroundColor: "black" }}
-        onClick={() => {
-          this.state.audio.pause();
-          this.props.handleClick(output, aids, audioVolume)
-        }}
+        style={{ margin: 5, width: 150, backgroundColor: "black" }}
+        onClick={this.handleNext}
       >
         Next
-    </Button>
+      </Button>
     } else {
-      return <div><Button
-        variant="contained"
-        color="primary"
-        disabled
-        style={{ margin: 20, width: 150 }}
-      >
-        Next
-    </Button>
-    <p>You cannot progress to the next step because you have not completed the questions.</p>
-    </div>
+      return (
+          <Button
+            variant="contained"
+            color="primary"
+            disabled
+            style={{ margin: 5, width: 150 }}
+          >
+            Next
+          </Button>
+      )
     }
   }
 
   render() {
-    const { audioPlay, output, aids } = this.state;
+    const { audioPlay, output } = this.state;
     return (
       <Container>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          5
+        </h2>
         <div
           style={{
-            textAlign: "left",
-            position: "relative",
-            marginTop: "10%",
+            marginTop: "5%",
+            marginTop: "5%",
           }}
         >
           <Container>
@@ -108,35 +103,22 @@ class VolumeAdjustment extends React.Component {
               </Select>
             </div>
             <br />
-            <div id="aids">
-              <h5>Will you be wearing amplification (e.g., hearing aid(s), cochlear implant(s), bone anchored hearing aid(s), etc.) when you complete this experiment?</h5>
-              <Select
-                labelId="demo-controlled-open-select-label"
-                id="demo-controlled-open-select"
-                value={aids}
-                onChange={this.handleAidsChange}
-                style={{ width: 150 }}
-              >
-                <MenuItem value={true}>Yes</MenuItem>
-                <MenuItem value={false}>No</MenuItem>
-              </Select>
-            </div>
             <br />
             <div>
-              <h5>
-                Please set your computer volume to approximately 50%. Click PLAY to listen to an audio sample.
-            </h5>
-              <h5>
-                Move the slider bar to your most comfortable listening level. Once comfortable, click NEXT to begin the study.
-            </h5>
-            <h5>Please do not adjust your computer volume during the experiment. </h5>
+              <h4>
+                Set your device's volume to the 50%. Click PLAY to listen to an
+                audio sample.
+              </h4>
+              <h4>
+                Then, move the slider below to a comfortable listening level.
+                After that, click NEXT to begin the test.
+              </h4>
             </div>
-            <VolumeSlider
-              handleVolume={this.handleVolume}
-              style={{ marginLeft: 5 }}
-            />
           </Container>
-          <br />
+          <VolumeSlider
+            handleVolume={(volume) => this.setState({ volume })}
+            style={{ marginLeft: "30%" }}
+          />
           {audioPlay ? (
             <Button
               variant="contained"
@@ -160,7 +142,7 @@ class VolumeAdjustment extends React.Component {
                 Play
               </Button>
             )}
-          {this.renderButton()}
+          {this.renderNextButton()}
         </div>
       </Container>
     );

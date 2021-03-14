@@ -16,7 +16,7 @@ class Data extends React.Component {
     const array = [];
     const datas = [];
     const headers = [
-      "ID", "Email", "Reversals", "Gender", "Province", "BirthYear", "DidWearAids", "WillWearAids", "Output", 
+      "ID", "Email", "Reversals", "Gender", "Province", "Age", "DidWearAids", "WillWearAids", "Output", 
       "preQuestion1", "preQuestion2", "preQuestion3",
       "block1", "trials1", "SNR1", "b1-postQuestion1", "b1-postQuestion2",
       "block2", "trials2", "SNR2", "b2-postQuestion1", "b2-postQuestion2",

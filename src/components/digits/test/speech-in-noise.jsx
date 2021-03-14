@@ -411,9 +411,8 @@ class SpeechInNoise extends React.Component {
               }}
             >
               <h2 className="font-weight-light">
-                Enter the three digits you heard. If you’re not sure, that’s fine.
-                Just guess.
-            </h2>
+                Enter the three digits you heard using the displayed keypad and your mouse OR your number keys on your keyboard. Press OK to submit. 
+              </h2>
               {this.renderInputs()}
               <h2 className="font-weight-lighter" style={{ marginTop: 10 }}>
                 Step {step} of {this.numOfQues}

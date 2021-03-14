@@ -1,16 +1,14 @@
 import React from "react";
-import Welcome from "../../components/digits/start/welcome";
-import Consent from "../../components/digits/start/consent";
-import Hearing from "../../components/digits/start/hearing";
-import Birth from "../../components/digits/start/birth";
-import VolumeAdjustment from "../../components/digits/test/adjustment";
+import Welcome from "../../components/digits/pre-test/welcome";
+import Consent from "../../components/digits/pre-test/consent";
+import Hearing from "../../components/digits/pre-test/hearing";
+import DemoInfo from "../../components/digits/pre-test/demo-info";
+import VolumeAdjustment from "../../components/digits/pre-test/adjustment";
 import SpeechInNoise from "../../components/digits/test/speech-in-noise";
 import TestDemo from "../../components/digits/test/test-demo";
-import Environment from "../../components/digits/test/environment";
+import Environment from "../../components/digits/pre-test/environment";
 import Submit from "../../components/digits/post-test/submit";
-import ResultVideo from "../../components/digits/post-test/result-video";
 import PostTestQuestions from "../../components/digits/post-test/post-test-questions";
-import End from "../../components/digits/post-test/end";
 import axios from "axios";
 
 class Main extends React.Component {
@@ -22,7 +20,8 @@ class Main extends React.Component {
       email: "",
       hearing: {},
       version: 1, // need to do 3 version here
-      volume: 10, // starts at 10/1000
+      volume: 0, // starts at 10/100
+      output: null,
       SNR: null,
       location: null,
       result: ["pass", "fail"][Math.floor(Math.random() * 2)],
@@ -41,7 +40,7 @@ class Main extends React.Component {
   };
 
   handleConsentClick = (email) => {
-    this.setState({ email, process: "birth" });
+    this.setState({ email, process: "demo-info" });
   };
 
   handleBirthClick = (birth) => {
@@ -56,8 +55,8 @@ class Main extends React.Component {
     this.setState({ process: "adjustment" });
   };
 
-  handleAdjustmentClick = () => {
-    this.setState({ process: "demo" });
+  handleAdjustmentClick = (volume, output) => {
+    this.setState({ process: "demo", volume, output });
   };
 
   handleDemoClick = () => {
@@ -65,11 +64,7 @@ class Main extends React.Component {
   };
 
   handleTestingClick = (SNR, timer) => {
-    this.setState({ SNR, timer, process: "result" });
-  };
-
-  handleResultClick = () => {
-    this.setState({ process: "post-test-questions" });
+    this.setState({ SNR, timer, process: "post-test" });
   };
 
   handlePostTestQuesClick = () => {
@@ -99,7 +94,7 @@ class Main extends React.Component {
       SNR,
       timer,
     });
-    this.setState({ process: "end" });
+    window.location = "/";
   };
 
   renderProcess = () => {
@@ -109,8 +104,8 @@ class Main extends React.Component {
         return <Welcome />;
       case "consent":
         return <Consent handleClick={this.handleConsentClick} />;
-      case "birth":
-        return <Birth handleClick={this.handleBirthClick} />;
+      case "demo-info":
+        return <DemoInfo handleClick={this.handleBirthClick} />;
       case "hearing":
         return <Hearing handleClick={this.handleHearClick} />;
       case "environment":
@@ -118,7 +113,6 @@ class Main extends React.Component {
       case "adjustment":
         return (
           <VolumeAdjustment
-            handleVolume={(volume) => this.setState({ volume })}
             handleClick={this.handleAdjustmentClick}
           />
         );
@@ -131,14 +125,10 @@ class Main extends React.Component {
             handleClick={this.handleTestingClick}
           />
         );
-      case "result":
-        return <ResultVideo handleClick={this.handleResultClick} />;
-      case "post-test-questions":
+      case "post-test":
         return <PostTestQuestions handleClick={this.handlePostTestQuesClick} />;
       case "submit":
         return <Submit handleClick={this.handleSubmitClick} />;
-      case "end":
-        return <End />;
       default:
         return null;
     }

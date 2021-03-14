@@ -24,16 +24,6 @@ export default function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell align="left">Use Email</TableCell>
-            <TableCell align="left" rowSpan={3}>
-              Location
-            </TableCell>
-            <TableCell align="left">Consents & Questions</TableCell>
-            <TableCell align="left">Birth</TableCell>
-            <TableCell align="left">Date</TableCell>
-            <TableCell align="left">Result</TableCell>
-            <TableCell align="left">Volume</TableCell>
-            <TableCell align="left">SNR</TableCell>
-            <TableCell align="left">Timer</TableCell>
             <TableCell align="left">Operation</TableCell>
           </TableRow>
         </TableHead>
@@ -41,36 +31,6 @@ export default function SimpleTable(props) {
           {props.rows.map((row, index) => (
             <TableRow key={index}>
               <TableCell align="left">{row.email}</TableCell>
-              <TableCell align="left">
-                {row.location.country_name}
-                <br />
-                {row.location.state}
-                <br />
-                {row.location.city}
-                <br />
-                {row.location.IPv4}
-              </TableCell>
-              <TableCell align="left">
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => props.handleShowDetails(row._id)}
-                >
-                  Show Details
-                </Button>
-              </TableCell>
-              <TableCell align="left">{row.birth}</TableCell>
-              <TableCell align="left">{row.date}</TableCell>
-              <TableCell align="left">{row.result}</TableCell>
-              <TableCell align="left">{row.volume}</TableCell>
-              <TableCell align="left">{row.SNR}</TableCell>
-              <TableCell align="left">
-                <div className="row">
-                  {row.timer.map((time) => (
-                    <p>{time} / </p>
-                  ))}
-                </div>
-              </TableCell>
               <TableCell align="left">
                 <Button
                   variant="outlined"
