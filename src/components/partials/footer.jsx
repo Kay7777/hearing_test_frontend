@@ -14,16 +14,15 @@ function Footer() {
       bottom: 0,
       right: 0
     }}>
-      <div className="col-4">
-        <img style={{  width: "100%", marginLeft: "10px" }} src={process.env.PUBLIC_URL + "/pictures/rehab.png"} />
+      <div className="col-5">
+        <img style={{  width: "100%", marginLeft: "5px", marginTop: "10%" }} src={process.env.PUBLIC_URL + "/pictures/rehab.png"} />
+      </div>
+      <div className="col-3">
+      <img style={{ width: "100%", marginLeft: "20%" }} src={process.env.PUBLIC_URL + "/pictures/covenant.png"} />
       </div>
       <div className="col-1"></div>
       <div className="col-3">
-      <img style={{ width: "100%" }} src={process.env.PUBLIC_URL + "/pictures/covenant.png"} />
-      </div>
-      <div className="col-1"></div>
-      <div className="col-3">
-        <img style={{ width: "100%", marginRight: "10px" }} src={process.env.PUBLIC_URL + "/pictures/irsm.png"} />
+        <img style={{ width: "80%", marginRight: "10px", marginTop: "10%"  }} src={process.env.PUBLIC_URL + "/pictures/irsm.png"} />
       </div>
     </div>
   </div>
