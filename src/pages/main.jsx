@@ -69,7 +69,7 @@ const Main = (props) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" disabled onClick={() => props.history.push("/questionnaire")}>Start</Button>
+            <Button size="small" onClick={() => props.history.push("/questionnaire")}>Start</Button>
           </CardActions>
         </Card>
       </div>

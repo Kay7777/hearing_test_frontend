@@ -83,7 +83,7 @@ checkbox questions on the second page to consent to participate in this study.</
                   <h5 style={{ marginTop: 9 }}>Yes</h5>
                   <a href={process.env.PUBLIC_URL + "/docs/icf.pdf"} target="_blank" style={{ marginTop: 7, marginLeft: 10 }}>
                     A copy of this information can be downloaded here
-            </a>
+                  </a>
                 </div>
                 <div className="row" style={{ marginLeft: 20 }}>
                   <h5 style={{ marginTop: 10 }}>3. Do you understand the benefits and risks involved in taking part in this research study?</h5>

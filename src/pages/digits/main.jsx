@@ -23,8 +23,7 @@ class Main extends React.Component {
       volume: 0, // starts at 10/100
       output: null,
       SNR: null,
-      location: null,
-      result: ["pass", "fail"][Math.floor(Math.random() * 2)],
+      location: null
     };
   }
 
@@ -78,7 +77,6 @@ class Main extends React.Component {
       consents,
       hearing,
       birth,
-      result,
       volume,
       SNR,
       timer,
@@ -89,7 +87,6 @@ class Main extends React.Component {
       consents,
       hearing,
       birth,
-      result,
       volume,
       SNR,
       timer,

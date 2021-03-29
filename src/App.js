@@ -11,6 +11,9 @@ import CRM2Data from "./pages/crm2/data";
 import CRM3Data from "./pages/crm3/data";
 import CRM4Data from "./pages/crm4/data";
 import SignalLossTest from "./pages/crm1/test";
+import Questionnaire from "./pages/questionnaire/main";
+import AphabA from "./pages/questionnaire/aphab-a";
+import AphabB from "./pages/questionnaire/aphab-b";
 import Consents from "./components/digits/database/consents";
 import PreTest from "./components/digits/database/pre-test";
 import PostTest1 from "./components/digits/database/post-test-1";
@@ -18,6 +21,8 @@ import PostTest2 from "./components/digits/database/post-test-2";
 import PostTest3 from "./components/digits/database/post-test-3";
 import UserData from "./components/digits/database/user-data";
 import DigitDatabase from "./pages/digits/database";
+import QuestionnaireDatabase from "./pages/questionnaire/database";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -45,6 +50,9 @@ class App extends React.Component {
           <Route exact path="/crm4/database" component={CRM4Data} />
           <Route exact path="/crm/test" component={SignalLossTest} />
           <Route exact path="/digits" component={DigitsMain} />
+          <Route exact path="/questionnaire" component={Questionnaire} />
+          <Route exact path="/questionnaire/aphab-a" component={AphabA} />
+          <Route exact path="/questionnaire/aphab-b" component={AphabB} />
           <Route exact path="/digits/database" component={DigitDatabase} />
           <Route exact path="/digits/database/consents" component={Consents} />
           <Route exact path="/digits/database/pretest" component={PreTest} />
@@ -52,6 +60,7 @@ class App extends React.Component {
           <Route exact path="/digits/database/posttest2" component={PostTest2} />
           <Route exact path="/digits/database/posttest3" component={PostTest3} />
           <Route exact path="/digits/database/userdata" component={UserData} />
+          <Route exact path="/questionnaire/database" component={QuestionnaireDatabase} />
         </Switch>
       </BrowserRouter>
     );

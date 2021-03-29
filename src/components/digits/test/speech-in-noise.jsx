@@ -26,7 +26,7 @@ class SpeechInNoise extends React.Component {
     this.input1 = React.createRef();
     this.input2 = React.createRef();
     this.input3 = React.createRef();
-    this.numOfQues = 5;
+    this.numOfQues = 23;
   }
 
   componentDidMount = async () => {
