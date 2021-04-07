@@ -14,6 +14,8 @@ import SignalLossTest from "./pages/crm1/test";
 import Questionnaire from "./pages/questionnaire/main";
 import AphabA from "./pages/questionnaire/aphab-a";
 import AphabB from "./pages/questionnaire/aphab-b";
+import SSQLong from "./pages/questionnaire/ssq-long";
+import SSQShort from "./pages/questionnaire/ssq-short";
 import Consents from "./components/digits/database/consents";
 import PreTest from "./components/digits/database/pre-test";
 import PostTest1 from "./components/digits/database/post-test-1";
@@ -53,6 +55,8 @@ class App extends React.Component {
           <Route exact path="/questionnaire" component={Questionnaire} />
           <Route exact path="/questionnaire/aphab-a" component={AphabA} />
           <Route exact path="/questionnaire/aphab-b" component={AphabB} />
+          <Route exact path="/questionnaire/ssq-long" component={SSQLong} />
+          <Route exact path="/questionnaire/ssq-short" component={SSQShort} />
           <Route exact path="/digits/database" component={DigitDatabase} />
           <Route exact path="/digits/database/consents" component={Consents} />
           <Route exact path="/digits/database/pretest" component={PreTest} />

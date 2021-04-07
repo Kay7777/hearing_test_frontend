@@ -27,6 +27,26 @@ const Questionnaire = (props) => {
             <Button size="small" onClick={() => props.history.push("/questionnaire/aphab-b")}>Start</Button>
           </CardActions>
         </Card>
+        <Card style={{ margin: 20 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              SSQ Long
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={() => props.history.push("/questionnaire/ssq-long")}>Start</Button>
+          </CardActions>
+        </Card>
+        <Card style={{ margin: 20 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              SSQ Short
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={() => props.history.push("/questionnaire/ssq-short")}>Start</Button>
+          </CardActions>
+        </Card>
       </div>
     </div>
   );
